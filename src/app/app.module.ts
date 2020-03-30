@@ -17,6 +17,9 @@ import { ChildofhomeComponent } from './childofhome/childofhome.component';
 
 import { MyModuleModule } from './my-module/my-module.module';
 import { RegistrationComponent } from './registration/registration.component';
+import { GlobalsService } from './services/advert-service/globals.service';
+import { CatService } from './services/advert-service/cat.service';
+import { CatlistComponent } from './Category/catlist/catlist.component';
 
 
 @NgModule({
@@ -30,6 +33,7 @@ import { RegistrationComponent } from './registration/registration.component';
       AdupdateComponent,
       ChildofhomeComponent,
       RegistrationComponent,
+      CatlistComponent,
    ],
    imports: [
       CommonModule,
@@ -42,7 +46,9 @@ import { RegistrationComponent } from './registration/registration.component';
    ],
    providers: [
       AdvertService,
-      AuthService
+      AuthService,
+      GlobalsService,
+      CatService
    ],
    bootstrap: [
       AppComponent

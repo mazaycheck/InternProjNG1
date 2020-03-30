@@ -1,0 +1,19 @@
+<a [routerLink]="['/categories/']" routerLinkActive="router-link-active" class="btn btn-success">Create New Advert</a>
+<table class="table table-striped">
+  <thead>
+      <tr>
+          
+          <th>Title</th>
+          <th></th>
+      </tr>        
+  </thead>
+  <tr *ngFor="let cat of categories">
+      <td><a [routerLink]="['/categories/details/', cat.categoryId]" routerLinkActive="router-link-active" >{{ cat.title }}</a></td>
+
+
+      <td class="d-flex justify-content-center">
+        <a routerLink="/ads/update/{{ cat.annoucementId }}" class="btn btn-warning">Update</a>
+        <button class="btn btn-danger" (click)="removeAd(cat.categoryId)">Delete</button>
+      </td>
+  </tr>
+</table>

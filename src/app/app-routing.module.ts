@@ -8,6 +8,7 @@ import { AdupdateComponent } from './Advert/adupdate/adupdate.component';
 import { HomeComponent } from './home/home.component';
 import { AdcreateComponent } from './Advert/adcreate/adcreate.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { CatlistComponent } from './Category/catlist/catlist.component';
 
 
 
@@ -17,7 +18,7 @@ export const routes: Routes = [
    { path: 'ads/details/:id', component: AddetailComponent},
    { path: 'ads/update/:id', component: AdupdateComponent},
    { path: 'auth/register', component: RegistrationComponent},
-
+   { path: 'categories', component: CatlistComponent},
    { path: '', component: HomeComponent},
 ];
 

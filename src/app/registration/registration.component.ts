@@ -18,12 +18,12 @@ export class RegistrationComponent implements OnInit {
   constructor(private service: AuthService, private router: Router) { }
 
  model: any = {};
- 
+
 
   registerForm: FormsModule;
 
   ngOnInit() {
-    
+
   }
 
   register() {
@@ -32,9 +32,12 @@ export class RegistrationComponent implements OnInit {
       response => {
         console.log(response);
         if (response) {
+          if (this.model.checkout === true) {
           this.service.login(this.model).subscribe(r => {
             this.service.settoken(r);
-            this.router.navigateByUrl('/ads'); });
+             });
+          }
+          this.router.navigateByUrl('/ads');
         }
       }
     );

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Advert } from 'src/app/Models/Advert';
 import { HttpClient } from '@angular/common/http';
+import { GlobalsService } from './globals.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class AdvertService {
 
 
   baseUrl: string;
-  constructor(private http: HttpClient) {
-    this.baseUrl = 'https://localhost:44356/api/annoucements/';
+  constructor(private http: HttpClient, private globals: GlobalsService) {
+    this.baseUrl = globals.baseUrl + 'api/annoucements/';
   }
   getAds(): Observable<Advert[]> {
     return this.http.get<Advert[]>(this.baseUrl);
