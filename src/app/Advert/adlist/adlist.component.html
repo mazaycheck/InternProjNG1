@@ -1,0 +1,26 @@
+<a [routerLink]="['/ads/new']" routerLinkActive="router-link-active" class="btn btn-success">Create New Advert</a>
+<table class="table table-striped">
+  <thead>
+      <tr>
+          <th>Title</th>
+          <th>UserId</th>
+          <th>Description</th>
+          <th>price</th>
+          <th>Date</th>
+          <th>categoryId</th>
+          <th></th>
+      </tr>        
+  </thead>
+  <tr *ngFor="let ad of advertisements">
+      <td><a [routerLink]="['/ads/details/', ad.annoucementId]" routerLinkActive="router-link-active" >{{ ad.title }}</a></td>
+      <td>{{ ad.userId }}</td>
+      <td>{{ ad.description }}</td>
+      <td>{{ ad.price }}</td>
+      <td>{{ ad.createDate }}</td>
+      <td>{{ ad.categoryId }}</td>
+      <td class="d-flex justify-content-center">
+        <a routerLink="/ads/update/{{ ad.annoucementId }}" class="btn btn-warning">Update</a>
+        <button class="btn btn-danger" (click)="removeAd(ad.annoucementId)">Delete</button>
+      </td>
+  </tr>
+</table>

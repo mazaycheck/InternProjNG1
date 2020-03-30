@@ -1,0 +1,16 @@
+<div *ngIf="!advert">
+  <p>Loading...</p>
+</div>
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">
+      {{ advert?.title }}
+    </h3>
+    <p class="card-text">
+      {{ advert?.description }}      
+    </p>
+  </div>
+  <div class="card-footer">
+    {{ advert?.userId }}
+  </div>
+</div>

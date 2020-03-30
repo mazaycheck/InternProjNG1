@@ -1,0 +1,19 @@
+<form [formGroup]="updateForm" (ngSubmit)="updateAd()">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" name="" id="title" name="title" class="form-control" placeholder="" aria-describedby="helpId" formControlName="title">
+    <small id="helpId" class="text-muted">Help text</small>
+  </div> 
+  <div class="form-group">
+    <label for="title">Price</label>
+    <input type="number" name="" id="price" name="price" class="form-control" placeholder="" aria-describedby="helpId" formControlName="price">
+    <small id="helpId" class="text-muted">Help text</small>
+  </div> 
+  <div class="form-group">
+    <label for="title">Description</label>
+    <textarea class="form-control" formControlName="description" rows=3></textarea>
+    <small id="helpId" class="text-muted">Help text</small>
+  </div> 
+  <input type="submit"  class="btn btn-success">
+ 
+</form>

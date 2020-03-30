@@ -1,0 +1,35 @@
+<form #registerForm="ngForm" (ngSubmit)="register()">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email your name</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" name="name" [(ngModel)]="model.name" >    
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" name="email" [(ngModel)]="model.email" >
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon2">373</span>
+    </div>
+    <input type="text" class="form-control" placeholder="Phone Number" name ="phonenumber" [(ngModel)]="model.phonenumber">
+  </div>
+
+  <div class="input-group mb-3">
+
+    <input type="number" class="form-control" placeholder="Town" name ="townid" [(ngModel)]="model.townid" >
+  </div>
+  
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" [(ngModel)]="model.password">
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Register">
+</form>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Advert } from './Models/Advert';
+import { AdvertService } from './services/advert-service/advert.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'webspa';
+
 }
