@@ -1,23 +1,18 @@
-<div class="d-flex row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-  <h5 class="my-0 mr-md-auto font-weight-normal"><a [routerLink]="['/ads']" routerLinkActive="router-link-active" class="p-2 text-dark" href="#">Advertisements</a></h5>
-  <nav class="my-2 my-md-0 mr-md-3">
-    <p>
-      <a routerLink="/categories">
-      Categories
-    </a>
-    </p>
-
-    
-    
+<div class="d-flex align-items-center justify-content-between p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  
+  <nav class="my-2 my-md-0 mr-md-3 nav">
+    <a class="nav-item nav-link" [routerLink]="['/ads']" routerLinkActive="router-link-active">Advertisements </a>
+    <a class="nav-item nav-link" routerLink="/categories">Categories</a>
   </nav>
-<form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login()" class="d-flex mr-3">
+<form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login()" class="d-flex mr-3 ">
   <input type="text" name="email" [(ngModel)]="model.email" class="form-control mr-3">
   <input type="password" name="password" [(ngModel)]="model.password" class="form-control mr-3">
-  <input type="submit" class="btn btn-info mr-3" value="Login" (click)="login()">
+  <input type="submit" class="btn btn-info mr-3" value="Login">
   <a [routerLink]="['/auth/register']" routerLinkActive="router-link-active"  class="btn btn-primary d-inline-block" href="#">Register</a>
 </form>  
 <div *ngIf="isLoggedIn()">
-  <button  class="btn btn-danger d-inline-block mr-3" (click)="logout()">Log Out</button>
+  <h4 class="d-inline-block m-3">Welcome {{name | titlecase }}</h4>
+  <button  class="btn btn-danger d-inline-block mr-3 mb-2" (click)="logout()">Log Out</button>
   
 </div>
 </div>

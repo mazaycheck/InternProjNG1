@@ -5,7 +5,8 @@ import { UserRegisterModel } from '../Models/UserRegisterModel';
 import { Observable } from 'rxjs';
 import { NgForOf } from '@angular/common';
 import { Router } from '@angular/router';
-
+import { ErrorInterceptorService } from '../services/advert-service/errorInterceptor.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private service: AuthService, private router: Router) { }
+  constructor(private service: AuthService, private router: Router, private toast: ToastrService) { }
 
  model: any = {};
 
@@ -26,22 +27,28 @@ export class RegistrationComponent implements OnInit {
 
   }
 
+  redirectoToHome() {
+    this.router.navigateByUrl('/ads');
+  }
+
   register() {
     console.log(this.model);
     this.service.register(this.model).subscribe(
       response => {
-        console.log(response);
+        this.toast.success('Registered!');
         if (response) {
           if (this.model.checkout === true) {
           this.service.login(this.model).subscribe(r => {
-            this.service.settoken(r);
+            this.service.settoken(r.token);
              });
           }
-          this.router.navigateByUrl('/ads');
+          setTimeout(() => {
+          this.redirectoToHome();
+         }, 1000);
         }
+      }, error => {
+        this.toast.error(error);
       }
-    );
+      );
+    }
   }
-
-
-}

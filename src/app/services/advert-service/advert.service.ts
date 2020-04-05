@@ -16,8 +16,9 @@ export class AdvertService {
   constructor(private http: HttpClient, private globals: GlobalsService) {
     this.baseUrl = globals.baseUrl + 'api/annoucements/';
   }
-  getAds(): Observable<Advert[]> {
-    return this.http.get<Advert[]>(this.baseUrl);
+  getAds(category: string, query: string): Observable<Advert[]> {
+
+    return this.http.get<Advert[]>(`${this.baseUrl}search?category=${category}&query=${query}`);
   }
   getAd(id: number) {
     return this.http.get<Advert>(this.baseUrl + `${id}`);
@@ -25,8 +26,8 @@ export class AdvertService {
   deleteAd(id: number) {
     return this.http.delete(this.baseUrl + `${id}`);
   }
-  updateAd(model: Advert) {
-    return this.http.put(this.baseUrl + `${model.annoucementId}`, model);
+  updateAd(model: Advert): Observable<any> {
+    return this.http.patch(this.baseUrl, model);
   }
   createAd(model: Advert) {
     console.log('creating');

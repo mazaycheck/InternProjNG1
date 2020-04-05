@@ -3,7 +3,6 @@ export class Advert {
     title: string;
     description: string;
     userId: number;
-    user: null;
     createDate: Date;
     expireDate: Date;
     price: number;
@@ -16,4 +15,17 @@ export class Advert {
         title: string,
         brands: null
     };
+    user: {
+        userId: number,
+        name: string,
+        email: string,
+        townId: number,
+        town: {
+            townId: number,
+            title: string,
+            coordX: number,
+            coordY: number
+        }
+    };
+
 }

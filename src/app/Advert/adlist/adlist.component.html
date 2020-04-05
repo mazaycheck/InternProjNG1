@@ -1,26 +1,43 @@
-<a [routerLink]="['/ads/new']" routerLinkActive="router-link-active" class="btn btn-success">Create New Advert</a>
+<div>
+  <a [routerLink]="['/ads/new']" routerLinkActive="router-link-active" class="btn btn-success d-inline-block mr-3">Create New Advert</a>
+  <form class="d-inline-block  w-50 mb-3">
+      <div class="input-group">
+        <input type="text" class="form-control" name="searchQuery" [(ngModel)]="searchQuery" placeholder="search here" (ngModelChange)="queryChange($event)">
+        <div class="input-group-append">
+          <select class="custom select bg-light" (change)="selectChanged($event)">
+            <option [selected]="optionSelected('')" value="">All</option>
+            <option *ngFor="let cat of categories" [value]="cat.title" [selected]="optionSelected(cat.title)">
+              {{ cat.title }}
+            </option>
+          </select>
+          <button class="btn btn-info px-2 py-1"> <fa-icon [icon]="SeachIcon"> </fa-icon></button>
+        </div>
+    </div>
+
+  </form>
+</div>
 <table class="table table-striped">
   <thead>
       <tr>
           <th>Title</th>
-          <th>UserId</th>
           <th>Description</th>
-          <th>price</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Location</th>
           <th>Date</th>
-          <th>categoryId</th>
           <th></th>
       </tr>        
   </thead>
   <tr *ngFor="let ad of advertisements">
       <td><a [routerLink]="['/ads/details/', ad.annoucementId]" routerLinkActive="router-link-active" >{{ ad.title }}</a></td>
-      <td>{{ ad.userId }}</td>
       <td>{{ ad.description }}</td>
-      <td>{{ ad.price }}</td>
-      <td>{{ ad.createDate }}</td>
-      <td>{{ ad.categoryId }}</td>
-      <td class="d-flex justify-content-center">
-        <a routerLink="/ads/update/{{ ad.annoucementId }}" class="btn btn-warning">Update</a>
-        <button class="btn btn-danger" (click)="removeAd(ad.annoucementId)">Delete</button>
+      <td>{{ ad.price | currency }}</td>
+      <td>{{ ad.category.title }}</td>
+      <td>{{ ad.user.town.title }}</td>
+      <td>{{ ad.createDate | date}}</td>
+      <td class="d-flex justify-content-end">
+        <a routerLink="/ads/update/{{ ad.annoucementId }}" class="btn btn-warning mr-3"> <fa-icon [icon]="EditIcon"></fa-icon> </a>
+        <button class="btn btn-danger" (click)="removeAd(ad.annoucementId)"> <fa-icon [icon]="DeleteIcon"></fa-icon>  </button>
       </td>
   </tr>
 </table>

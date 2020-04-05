@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdvertService } from './services/advert-service/advert.service';
 import { AdlistComponent } from './Advert/adlist/adlist.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +20,16 @@ import { RegistrationComponent } from './registration/registration.component';
 import { GlobalsService } from './services/advert-service/globals.service';
 import { CatService } from './services/advert-service/cat.service';
 import { CatlistComponent } from './Category/catlist/catlist.component';
+import { BoldDirective } from './Category/catlist/my-directive.directive';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import { ErrorInterceptorService } from './services/advert-service/errorInterceptor.service';
+import { ToastrModule } from 'ngx-toastr';
+import { ButtonupdateComponent } from './Category/catlist/tdupdate/buttonupdate/buttonupdate.component';
+import { TdupdateComponent } from './Category/catlist/tdupdate/tdupdate.component';
+import { CatcreateComponent } from './Category/catcreate/catcreate.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MetanitModule } from './metanit/metanit.module';
 
 
 @NgModule({
@@ -34,6 +44,12 @@ import { CatlistComponent } from './Category/catlist/catlist.component';
       ChildofhomeComponent,
       RegistrationComponent,
       CatlistComponent,
+      BoldDirective,
+      ButtonupdateComponent,
+      TdupdateComponent,
+      CatcreateComponent,
+
+
    ],
    imports: [
       CommonModule,
@@ -42,13 +58,28 @@ import { CatlistComponent } from './Category/catlist/catlist.component';
       ReactiveFormsModule,
       HttpClientModule,
       AppRoutingModule,
-      MyModuleModule
+      MyModuleModule,
+      BrowserAnimationsModule,
+      MatSliderModule,
+      ToastrModule.forRoot({
+         timeOut: 2500,
+         positionClass: 'toast-bottom-right',
+         preventDuplicates: true}),
+      FontAwesomeModule,
+      MetanitModule,
    ],
    providers: [
       AdvertService,
       AuthService,
       GlobalsService,
-      CatService
+      CatService,
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: ErrorInterceptorService,
+         multi: true
+      },
+
+
    ],
    bootstrap: [
       AppComponent

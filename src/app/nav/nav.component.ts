@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/advert-service/auth.service';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-nav',
@@ -10,38 +13,43 @@ import { Observable } from 'rxjs';
 export class NavComponent implements OnInit {
 
   model: any = {};
-  loggedin: boolean;
   name: string;
 
-  constructor(private service: AuthService) { }
+  constructor(public service: AuthService, private toast: ToastrService, private router: Router) { }
 
   ngOnInit() {
+    this.isLoggedIn();
   }
 
   login() {
-    console.log(this.model);
+
     this.service.login(this.model).subscribe(
       response => {
-        console.log(response);
         if (response) {
           localStorage.setItem('token' , response.token);
-          this.loggedin = true;
-
+          this.isLoggedIn();
+          this.toast.success('Logged in');
         }
+      }, error => {
+        this.toast.error(error);
       }
     );
   }
 
   logout() {
     localStorage.removeItem('token');
-    this.loggedin = false;
+    this.router.navigateByUrl('/');
+    this.toast.warning('Logged out');
   }
   isLoggedIn() {
-    if (localStorage.getItem('token')) {
+     const result = this.service.isLoggedIn();
 
-      return true;
-    }
-    return false;
+     if (result) {
+       this.name = result;
+       return true;
+     } else {
+       return false;
+     }
   }
 
 }
