@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Advert } from '../../Models/Advert';
-import { AdvertService} from '../../services/Repositories/advert.service';
+import { Advert } from '../../../Models/Advert';
+import { AdvertService} from '../../../services/Repositories/advert.service';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from 'src/app/Models/Category';
 import { CatService } from 'src/app/services/Repositories/cat.service';

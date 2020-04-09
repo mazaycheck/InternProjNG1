@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { AdlistComponent } from './Advert/adlist/adlist.component';
-import { AddetailComponent } from './Advert/addetail/addetail.component';
+import { AdlistComponent } from './MainPages/Advert/adlist/adlist.component';
+import { AddetailComponent } from './MainPages/Advert/addetail/addetail.component';
 
-import { AdupdateComponent } from './Advert/adupdate/adupdate.component';
+import { AdupdateComponent } from './MainPages/Advert/adupdate/adupdate.component';
 import { HomeComponent } from './MainPages/home/home.component';
-import { AdcreateComponent } from './Advert/adcreate/adcreate.component';
-import { RegistrationComponent } from './registration/registration.component';
-import { CatlistComponent } from './Category/catlist/catlist.component';
+import { AdcreateComponent } from './MainPages/Advert/adcreate/adcreate.component';
+import { RegistrationComponent } from './MainPages/registration/registration.component';
+import { CatlistComponent } from './MainPages/Category/catlist/catlist.component';
 import { AuthGuard } from './services/guards/auth.guard';
+import { TownListComponent } from './MainPages/Town/townList/townList.component';
 
 
 
@@ -21,7 +22,8 @@ export const routes: Routes = [
     { path: 'ads/new', component: AdcreateComponent },
     { path: 'ads/details/:id', component: AddetailComponent },
     { path: 'ads/update/:id', component: AdupdateComponent },
-    { path: 'categories', component: CatlistComponent, }
+    { path: 'categories', component: CatlistComponent, },
+    { path: 'towns', component: TownListComponent, }
     ]
   },
   { path: 'auth/register', component: RegistrationComponent},
