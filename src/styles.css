@@ -4,7 +4,11 @@ body {
     height: 100%;
     margin: 0; 
     font-family: 'Abel', sans-serif !important;
-    font-size: 1rem; 
+    font-size: 1rem!important; 
+}
+
+td{
+    font-size: 1.1rem!important;
 }
 
 p {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Advert } from './Models/Advert';
-import { AdvertService } from './services/advert-service/advert.service';
+import { AdvertService } from './services/Repositories/advert.service';
 
 @Component({
   selector: 'app-root',

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Advert } from '../../Models/Advert';
-import { AdvertService} from '../../services/advert-service/advert.service';
+import { AdvertService} from '../../services/Repositories/advert.service';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from 'src/app/Models/Category';
-import { CatService } from 'src/app/services/advert-service/cat.service';
-import { faSearch, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { CatService } from 'src/app/services/Repositories/cat.service';
+import { faSearch, faTrash, faEdit, faList, faTh } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { GlobalsService } from 'src/app/services/global/globals.service';
 
 @Component({
   selector: 'app-adlist',
@@ -15,18 +17,29 @@ export class AdlistComponent implements OnInit {
   SeachIcon = faSearch;
   DeleteIcon = faTrash;
   EditIcon = faEdit;
+  ListIcon = faList;
+  LargeIcon = faTh;
   advertisements: Advert[];
   categories: Category[];
   selectedCategory: string;
   searchQuery: string;
+  presentationMode: string;
+  basePhotoUrl = 'http://localhost:5000/images/';
 
-  constructor(private adservice: AdvertService, private catservice: CatService, private toast: ToastrService) { }
+
+  constructor(private adservice: AdvertService, private catservice: CatService, private toast: ToastrService, private router: Router,
+              private globals: GlobalsService) { }
 
   optionSelected(option: string) {
     return option === this.selectedCategory;
   }
 
+  switchPresentationMode(mode: string) {
+    this.globals.displayAdvertStyle = mode;
+    this.presentationMode = mode;
+  }
   ngOnInit() {
+    this.presentationMode = this.globals.displayAdvertStyle;
     this.selectedCategory = '';
     this.searchQuery = '';
     this.refresh();
@@ -42,6 +55,10 @@ export class AdlistComponent implements OnInit {
   queryChange($event) {
     this.refresh();
 
+  }
+
+  goToDetails(id: number){
+    this.router.navigateByUrl(`/ads/details/${id}`);
   }
   selectChanged($event) {
     console.log($event.target.value);

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ChildofhomeComponent } from '../childofhome/childofhome.component';
+
 
 @Component({
   selector: 'app-home',

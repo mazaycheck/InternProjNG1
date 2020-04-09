@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AdvertService } from 'src/app/services/advert-service/advert.service';
+import { AdvertService } from 'src/app/services/Repositories/advert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Advert } from 'src/app/Models/Advert';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CatService } from 'src/app/services/advert-service/cat.service';
+import { CatService } from 'src/app/services/Repositories/cat.service';
 import { Category } from 'src/app/Models/Category';
 import { faSearch, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 

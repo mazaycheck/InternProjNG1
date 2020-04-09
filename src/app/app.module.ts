@@ -4,26 +4,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AdvertService } from './services/advert-service/advert.service';
+import { AdvertService } from './services/Repositories/advert.service';
 import { AdlistComponent } from './Advert/adlist/adlist.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './MainPages/home/home.component';
 import { CommonModule } from '@angular/common';
 import { AddetailComponent } from './Advert/addetail/addetail.component';
 import { AdcreateComponent } from './Advert/adcreate/adcreate.component';
 import { AdupdateComponent } from './Advert/adupdate/adupdate.component';
-import { AuthService } from './services/advert-service/auth.service';
-import { ChildofhomeComponent } from './childofhome/childofhome.component';
+import { AuthService } from './services/auth/auth.service';
+
 
 import { MyModuleModule } from './my-module/my-module.module';
 import { RegistrationComponent } from './registration/registration.component';
-import { GlobalsService } from './services/advert-service/globals.service';
-import { CatService } from './services/advert-service/cat.service';
+import { GlobalsService } from './services/global/globals.service';
+import { CatService } from './services/Repositories/cat.service';
 import { CatlistComponent } from './Category/catlist/catlist.component';
 import { BoldDirective } from './Category/catlist/my-directive.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
-import { ErrorInterceptorService } from './services/advert-service/errorInterceptor.service';
+import { ErrorInterceptorService } from './services/err/errorInterceptor.service';
 import { ToastrModule } from 'ngx-toastr';
 import { ButtonupdateComponent } from './Category/catlist/tdupdate/buttonupdate/buttonupdate.component';
 import { TdupdateComponent } from './Category/catlist/tdupdate/tdupdate.component';
@@ -41,7 +41,6 @@ import { MetanitModule } from './metanit/metanit.module';
       AddetailComponent,
       AdcreateComponent,
       AdupdateComponent,
-      ChildofhomeComponent,
       RegistrationComponent,
       CatlistComponent,
       BoldDirective,

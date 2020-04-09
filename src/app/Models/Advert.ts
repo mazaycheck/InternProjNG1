@@ -7,7 +7,6 @@ export class Advert {
     expireDate: Date;
     price: number;
     negotiable: boolean;
-    photos: null ;
     isActive: boolean;
     categoryId: number;
     category: {
@@ -20,6 +19,7 @@ export class Advert {
         name: string,
         email: string,
         townId: number,
+        phoneNumber: string,
         town: {
             townId: number,
             title: string,
@@ -27,5 +27,5 @@ export class Advert {
             coordY: number
         }
     };
-
+    photos: any[];
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Category } from 'src/app/Models/Category';
-import { CatService } from 'src/app/services/advert-service/cat.service';
+import { CatService } from 'src/app/services/Repositories/cat.service';
 import { ToastrService } from 'ngx-toastr';
 import { faSearch, faTrash, faEdit, faSave, faBan } from '@fortawesome/free-solid-svg-icons';
 

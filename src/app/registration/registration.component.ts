@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/advert-service/auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { UserRegisterModel } from '../Models/UserRegisterModel';
 import { Observable } from 'rxjs';
 import { NgForOf } from '@angular/common';
 import { Router } from '@angular/router';
-import { ErrorInterceptorService } from '../services/advert-service/errorInterceptor.service';
+import { ErrorInterceptorService } from '../services/err/errorInterceptor.service';
 import { ToastrService } from 'ngx-toastr';
 
 

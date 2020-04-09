@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserRegisterModel } from 'src/app/Models/UserRegisterModel';
-import { GlobalsService } from './globals.service';
+import { GlobalsService } from '../global/globals.service';
 import * as jwt_decode from 'jwt-decode';
 
 @Injectable({

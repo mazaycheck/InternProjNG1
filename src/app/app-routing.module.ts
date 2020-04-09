@@ -5,7 +5,7 @@ import { AdlistComponent } from './Advert/adlist/adlist.component';
 import { AddetailComponent } from './Advert/addetail/addetail.component';
 
 import { AdupdateComponent } from './Advert/adupdate/adupdate.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './MainPages/home/home.component';
 import { AdcreateComponent } from './Advert/adcreate/adcreate.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { CatlistComponent } from './Category/catlist/catlist.component';

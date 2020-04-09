@@ -26,6 +26,28 @@
     <textarea class="form-control" formControlName="description" rows=3></textarea>
     <small id="helpId" class="text-muted">Help text</small>
   </div> 
-  <input type="submit"  class="btn btn-success">
+  
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+     <span class="input-group-text">Upload</span>
+    </div>
+    
+    <div class="custom-file">      
+      <input type="file" multiple class="custom-file-input" value="Choose am image" id="inputFile1" (change)="onFileAttach($event)" formControlName="photo">
+        <label class="custom-file-label" for="inputFile1" >Choose file</label>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div *ngFor="let url of imgUrls" style="width:200px;height:200px;overflow:hidden;" class="d-inline-block">
+      <img style="width:100%;height:100%;object-fit: cover"  [src]="url" class="img-thumbnail d-inline-block" >
+    </div>
+    <!-- <img width="200px" height="150px" [src]="imgUrls[1]" class="img-thumbnail d-inline-block" >
+    <img width="200px" height="150px" [src]="imgUrls[2]" class="img-thumbnail d-inline-block" >
+    <img width="200px" height="150px" [src]="imgUrls[3]" class="img-thumbnail d-inline-block" >
+    <img width="200px" height="150px" [src]="imgUrls[4]" class="img-thumbnail d-inline-block" >
+    <img width="200px" height="150px" [src]="imgUrls[5]" class="img-thumbnail d-inline-block" > -->
+  </div>
+  <input type="submit"  class="btn btn-success d-block">
+  
  
 </form>
