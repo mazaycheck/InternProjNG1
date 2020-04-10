@@ -12,9 +12,10 @@ export class CatlistComponent implements OnInit {
   SeachIcon = faSearch;
   DeleteIcon = faTrash;
   EditIcon = faEdit;
+  categories: Category[] = [];
   constructor(private service: CatService) { }
 
-  categories: Category[];
+ 
 
   hid = false;
   addMode = false;

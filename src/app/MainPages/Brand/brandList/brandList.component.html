@@ -1,0 +1,34 @@
+<a class="btn btn-success mb-3" (click)="switchAddMode()">Add a new brand</a>
+
+<ul *ngIf="brands.length && categories.length" class="list-group">
+    <li *ngFor="let brand of brands" class="list-group-item">
+
+      <div *ngIf="!brand.edit" class="row">
+        <p class="col-md-5">{{ brand.title }}</p>
+        <p class="col-md-5">{{ getCatName(brand) }}</p>
+        <button class="btn btn-warning mr-3" (click)="update(brand)"><fa-icon [icon]="EditIcon"></fa-icon></button>
+        <button class="btn btn-danger" (click)="delete(brand)"><fa-icon [icon]="DeleteIcon"></fa-icon></button>
+      </div>
+      <div *ngIf="brand.edit" class="row">
+        <input type="text" name="updateCat"  class="form-control col-md-5 d-inline-block mr-2" [(ngModel)]="brand.title">
+        <select class="form-control col-md-5 d-inline-block mr-2 " [(ngModel)]="brand.categoryId">
+          <option *ngFor="let cat of categories" [value]="cat.categoryId">{{ cat.title }}</option>
+        </select>    
+        <button class="btn btn-success mr-3" (click)="editSave(brand)"> <fa-icon [icon]="SaveIcon"></fa-icon></button>
+        <button class="btn btn-info" (click)="editCancel(brand)"> <fa-icon [icon]="CancelIcon"></fa-icon> </button>
+      </div>
+      
+    </li>
+
+    <li *ngIf="addMode" class="list-group-item">
+      <div>
+        <input type="text" name="updateCat"  class="form-control col-md-5 d-inline-block mr-2 " [(ngModel)]="temporaryBrand.title">
+        <select class="form-control col-md-5 d-inline-block mr-2 " [(ngModel)]="temporaryBrand.categoryId">
+          <option *ngFor="let cat of categories" [value]="cat.categoryId">{{ cat.title }}</option>
+        </select>        
+        <button class="btn btn-success mr-3" (click)="save()"> <fa-icon [icon]="SaveIcon"></fa-icon></button>
+        <button class="btn btn-info" (click)="cancel()"> <fa-icon [icon]="CancelIcon"></fa-icon> </button>
+      </div>
+        
+    </li>
+  </ul>

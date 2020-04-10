@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { faEdit, faTrash, faSave, faBan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'app-townList',
   templateUrl: './townList.component.html',
   styleUrls: ['./townList.component.css']
@@ -14,9 +15,9 @@ export class TownListComponent implements OnInit {
   EditIcon = faEdit;
   SaveIcon = faSave;
   CancelIcon = faBan;
-  towns: Town[];
+  towns: Town[] = [];
   addMode = false;
-  newTown: Town;
+  temporaryTown: Town;
   constructor(private repo: TownService, private toast: ToastrService) { }
 
   ngOnInit() {
@@ -32,12 +33,15 @@ export class TownListComponent implements OnInit {
         this.toast.error(error);
       }
     );
-    this.newTown = new Town();
+    this.temporaryTown = new Town();
     this.addMode = false;
   }
 
   update(town: Town) {
+    this.turnUpdateOffOnAllEtries();
     town.edit = true;
+    this.temporaryTown.title = town.title;
+    this.addMode = false;
   }
   delete(town: Town) {
     this.repo.delete(town).subscribe(
@@ -52,7 +56,7 @@ export class TownListComponent implements OnInit {
   }
 
   save() {
-    this.repo.create(this.newTown).subscribe(
+    this.repo.create(this.temporaryTown).subscribe(
       response => {
         this.refresh();
       },
@@ -64,14 +68,32 @@ export class TownListComponent implements OnInit {
 
   cancel() {
     this.addMode = false;
+    this.temporaryTown = new Town();
+  }
+
+  turnUpdateOffOnAllEtries() {
+    this.towns.forEach(element => {
+      element.edit = false;
+    });
   }
 
   switchAddMode() {
     this.addMode = true;
+    this.turnUpdateOffOnAllEtries();
+    this.temporaryTown = new Town();
   }
 
   editSave(town: Town) {
-    town.title = this.newTown.title;
+    if (town.title === this.temporaryTown.title) {
+      town.edit = false;
+      this.toast.info('No changes');
+      return null;
+    } else if (town.title.length === 0) {
+      town.edit = false;
+      town.title = this.temporaryTown.title;
+      this.toast.warning('Cannot save empty string');
+      return null;
+    }
     this.repo.update(town).subscribe(
       respnse => {
         this.toast.success('Updated town with id: ' + town.townId);
@@ -85,6 +107,7 @@ export class TownListComponent implements OnInit {
   }
   editCancel(town: Town) {
     town.edit = false;
+    town.title = this.temporaryTown.title;
   }
 
 }

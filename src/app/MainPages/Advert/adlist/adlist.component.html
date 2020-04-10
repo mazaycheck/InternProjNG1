@@ -7,9 +7,11 @@
           <div class="input-group-append">
             <select class="custom select bg-light" (change)="selectChanged($event)">
               <option [selected]="optionSelected('')" value="">All</option>
-              <option *ngFor="let cat of categories" [value]="cat.title" [selected]="optionSelected(cat.title)">
-                {{ cat.title }}
-              </option>
+                <ng-container *ngIf="categories.length">
+                  <option  *ngFor="let cat of categories" [value]="cat.title" [selected]="optionSelected(cat.title)">
+                    {{ cat.title }}
+                  </option>
+              </ng-container>
             </select>
             <button class="btn btn-info px-2 py-1"> <fa-icon [icon]="SeachIcon"> </fa-icon></button>
           </div>
@@ -22,7 +24,7 @@
   </div>
 </div>
 
-
+<ng-container *ngIf="advertisements.length">
 <table *ngIf="presentationMode == 'list'" class="table table-striped">
   <thead>
       <tr>
@@ -63,4 +65,4 @@
     </div>
   </div>
 </div>
-
+</ng-container>

@@ -1,6 +1,6 @@
 <a class="btn btn-success mb-3" (click)="switchAddMode()">Create New Category</a>
 
-<ul class="list-group">
+<ul *ngIf="categories.length" class="list-group">
     <li *ngFor="let cat of categories" class="list-group-item">
         <app-tdupdate  [cat]="cat" (resetAllCats)="switch($event)" [hidden]="hid"></app-tdupdate>        
     </li>

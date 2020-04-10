@@ -29,6 +29,7 @@ import { TdupdateComponent } from './MainPages/Category/catlist/tdupdate/tdupdat
 import { CatcreateComponent } from './MainPages/Category/catcreate/catcreate.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TownListComponent } from './MainPages/Town/townList/townList.component';
+import { BrandListComponent } from './MainPages/Brand/brandList/brandList.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { TownListComponent } from './MainPages/Town/townList/townList.component'
       ButtonupdateComponent,
       TdupdateComponent,
       CatcreateComponent,
-      TownListComponent
+      TownListComponent,
+      BrandListComponent
    ],
    imports: [
       CommonModule,

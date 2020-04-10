@@ -19,8 +19,8 @@ export class AdlistComponent implements OnInit {
   EditIcon = faEdit;
   ListIcon = faList;
   LargeIcon = faTh;
-  advertisements: Advert[];
-  categories: Category[];
+  advertisements: Advert[] = [];
+  categories: Category[] = [];
   selectedCategory: string;
   searchQuery: string;
   presentationMode: string;

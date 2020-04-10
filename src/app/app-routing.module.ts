@@ -11,6 +11,7 @@ import { RegistrationComponent } from './MainPages/registration/registration.com
 import { CatlistComponent } from './MainPages/Category/catlist/catlist.component';
 import { AuthGuard } from './services/guards/auth.guard';
 import { TownListComponent } from './MainPages/Town/townList/townList.component';
+import { BrandListComponent } from './MainPages/Brand/brandList/brandList.component';
 
 
 
@@ -23,7 +24,8 @@ export const routes: Routes = [
     { path: 'ads/details/:id', component: AddetailComponent },
     { path: 'ads/update/:id', component: AdupdateComponent },
     { path: 'categories', component: CatlistComponent, },
-    { path: 'towns', component: TownListComponent, }
+    { path: 'towns', component: TownListComponent, },
+    { path: 'brands', component: BrandListComponent, }
     ]
   },
   { path: 'auth/register', component: RegistrationComponent},

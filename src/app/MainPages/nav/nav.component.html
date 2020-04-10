@@ -4,6 +4,7 @@
     <a class="nav-item nav-link" [routerLink]="['/ads']" routerLinkActive="router-link-active">Advertisements </a>
     <a class="nav-item nav-link" routerLink="/categories">Categories</a>
     <a class="nav-item nav-link" routerLink="/towns">Towns</a>
+    <a class="nav-item nav-link" routerLink="/brands">Brands</a>
   </nav>
 <form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login()" class="d-flex mr-3 ">
   <input type="text" name="email" [(ngModel)]="model.email" class="form-control mr-3">

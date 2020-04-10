@@ -1,6 +1,6 @@
 <a class="btn btn-success mb-3" (click)="switchAddMode()">Add a new town</a>
 
-<ul class="list-group">
+<ul *ngIf="towns.length" class="list-group">
     <li *ngFor="let town of towns" class="list-group-item">
 
       <div *ngIf="!town.edit" class="row">
@@ -9,7 +9,7 @@
         <button class="btn btn-danger" (click)="delete(town)"><fa-icon [icon]="DeleteIcon"></fa-icon></button>
       </div>
       <div *ngIf="town.edit" class="row">
-        <input type="text" name="updateCat"  class="form-control col-md-10 d-inline-block mr-2" [value]="town.title" [(ngModel)]="town.title">
+        <input type="text" name="updateCat"  class="form-control col-md-10 d-inline-block mr-2" [(ngModel)]="town.title">
         <button class="btn btn-success mr-3" (click)="editSave(town)"> <fa-icon [icon]="SaveIcon"></fa-icon></button>
         <button class="btn btn-info" (click)="editCancel(town)"> <fa-icon [icon]="CancelIcon"></fa-icon> </button>
       </div>
@@ -18,7 +18,7 @@
 
     <li *ngIf="addMode" class="list-group-item">
       <div>
-        <input type="text" name="updateCat"  class="form-control col-md-10 d-inline-block mr-2 " [(ngModel)]="newTown.title">
+        <input type="text" name="updateCat"  class="form-control col-md-10 d-inline-block mr-2 " [(ngModel)]="temporaryTown.title">
         <button class="btn btn-success mr-3" (click)="save()"> <fa-icon [icon]="SaveIcon"></fa-icon></button>
         <button class="btn btn-info" (click)="cancel()"> <fa-icon [icon]="CancelIcon"></fa-icon> </button>
       </div>
