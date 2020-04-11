@@ -31,7 +31,6 @@ export class AddetailComponent implements OnInit {
   }
   changeSelectedImage(image: string) {
     this.selectedImage = image;
-   
   }
 
 }

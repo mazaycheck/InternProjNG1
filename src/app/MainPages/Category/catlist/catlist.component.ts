@@ -15,7 +15,7 @@ export class CatlistComponent implements OnInit {
   categories: Category[] = [];
   constructor(private service: CatService) { }
 
- 
+
 
   hid = false;
   addMode = false;

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Advert } from '../../../Models/Advert';
-import { AdvertService} from '../../../services/Repositories/advert.service';
+import { AdvertService } from '../../../services/Repositories/advert.service';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from 'src/app/Models/Category';
 import { CatService } from 'src/app/services/Repositories/cat.service';
 import { faSearch, faTrash, faEdit, faList, faTh } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { GlobalsService } from 'src/app/services/global/globals.service';
+import { AdvertQueryOptions } from 'src/app/Models/AdvertQueryOptions';
+import { PageObject } from 'src/app/Models/PageObject';
 
 @Component({
   selector: 'app-adlist',
@@ -21,17 +23,19 @@ export class AdlistComponent implements OnInit {
   LargeIcon = faTh;
   advertisements: Advert[] = [];
   categories: Category[] = [];
-  selectedCategory: string;
-  searchQuery: string;
+  queryOptions: AdvertQueryOptions;
   presentationMode: string;
   basePhotoUrl = 'http://localhost:5000/images/';
+  pageObject: PageObject;
 
 
   constructor(private adservice: AdvertService, private catservice: CatService, private toast: ToastrService, private router: Router,
-              private globals: GlobalsService) { }
+              private globals: GlobalsService) {
+                this.queryOptions = new AdvertQueryOptions();
+               }
 
   optionSelected(option: string) {
-    return option === this.selectedCategory;
+    return option === this.queryOptions?.category;
   }
 
   switchPresentationMode(mode: string) {
@@ -40,8 +44,6 @@ export class AdlistComponent implements OnInit {
   }
   ngOnInit() {
     this.presentationMode = this.globals.displayAdvertStyle;
-    this.selectedCategory = '';
-    this.searchQuery = '';
     this.refresh();
     this.catservice.getAll().subscribe(
       response => {
@@ -52,23 +54,23 @@ export class AdlistComponent implements OnInit {
     );
   }
 
-  queryChange($event) {
+  queryChanged($event) {
     this.refresh();
 
   }
 
-  goToDetails(id: number){
+  goToDetails(id: number) {
     this.router.navigateByUrl(`/ads/details/${id}`);
   }
   selectChanged($event) {
-    console.log($event.target.value);
-    this.selectedCategory = $event.target.value;
+    this.queryOptions.category = $event.target.value;
     this.refresh();
   }
   refresh() {
-    this.adservice.getAds(this.selectedCategory, this.searchQuery).subscribe(
+    this.adservice.getAds(this.queryOptions).subscribe(
       response => {
-        this.advertisements = response;
+        this.pageObject = response;
+        this.advertisements = this.pageObject.pageData;
       }, error => {
         this.toast.error(error);
       }
@@ -84,6 +86,11 @@ export class AdlistComponent implements OnInit {
       this.toast.error(`Could not delete advert`);
     }
     );
+  }
+
+  pageClicked(pageNumber: number) {
+    this.queryOptions.pageNumber = pageNumber;
+    this.refresh();
   }
 
 }

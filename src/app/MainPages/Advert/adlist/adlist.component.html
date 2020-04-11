@@ -3,7 +3,7 @@
     <a [routerLink]="['/ads/new']" routerLinkActive="router-link-active" class="btn btn-success d-inline-block mr-3">Create New Advert</a>
     <form class="d-inline-block w-75 mb-3">
         <div class="input-group">
-          <input type="text" class="form-control w-75 d-inline-block" name="searchQuery" [(ngModel)]="searchQuery" placeholder="search here" (ngModelChange)="queryChange($event)">
+          <input type="text" class="form-control w-75 d-inline-block" name="searchQuery" [(ngModel)]="queryOptions.query" placeholder="search here" (ngModelChange)="queryChanged($event)">
           <div class="input-group-append">
             <select class="custom select bg-light" (change)="selectChanged($event)">
               <option [selected]="optionSelected('')" value="">All</option>
@@ -49,6 +49,20 @@
         <button class="btn btn-danger" (click)="removeAd(ad.annoucementId)"> <fa-icon [icon]="DeleteIcon"></fa-icon>  </button>
       </td>
   </tr>
+<ng-container *ngIf="advertisements.length < pageObject.pageSize">
+  <tr *ngFor="let empty of [].constructor(pageObject.pageSize - advertisements.length) " class="hidden">
+      <td><a href="#">123</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="d-flex justify-content-end">        
+        <button class="btn btn-danger" > <fa-icon [icon]="DeleteIcon"></fa-icon>  </button>
+      </td>
+  </tr>
+</ng-container>
+  
 </table>
 
 
@@ -66,3 +80,20 @@
   </div>
 </div>
 </ng-container>
+<div></div>
+<nav aria-label="...">
+  <ul class="pagination">
+
+    <li class="page-item" [class.disabled]="pageObject?.pageNumber == 1">
+      <a class="page-link" (click)="pageClicked(pageObject.pageNumber - 1)">Previous</a>
+    </li>
+
+    <li *ngFor="let item of [].constructor(pageObject?.totalPages); let i = index" class="page-item" [class.active]="i+1 == pageObject?.pageNumber">
+      <a class="page-link" (click)="pageClicked(i+1)" style="cursor: pointer;"> {{i + 1}}</a>
+    </li>
+
+    <li class="page-item" [class.disabled]="pageObject?.pageNumber == pageObject?.totalPages">
+      <a class="page-link" (click)="pageClicked(pageObject.pageNumber + 1)">Next</a>
+    </li>
+  </ul>
+</nav>
