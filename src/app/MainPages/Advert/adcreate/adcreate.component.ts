@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { CatService } from 'src/app/services/Repositories/cat.service';
 import { Category } from 'src/app/Models/Category';
 import { ToastrService } from 'ngx-toastr';
+import { Town } from 'src/app/Models/Town';
+import { TownService } from 'src/app/services/Repositories/town.service';
 
 @Component({
   selector: 'app-adcreate',
@@ -13,13 +15,15 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdcreateComponent implements OnInit {
   advertForm: FormGroup;
-  categories: Category[];
-  selectedCategory: string;
+  categories: Category[] = [];
+  towns: Town[] = [];
+  selectedCategory: Category;
   numberOfFiles: number;
-  imgUrls =  new Array<string>(this.numberOfFiles);
+  imgUrls = new Array<string>(this.numberOfFiles);
   pictures: string[] = [];
   formData: FormData;
-  constructor(private service: AdvertService, private router: Router, private catservice: CatService, private toast: ToastrService) { }
+  constructor(private service: AdvertService, private router: Router, private catservice: CatService,
+              private toast: ToastrService, private townservice: TownService) { }
 
   ngOnInit() {
     this.advertForm = new FormGroup({
@@ -28,9 +32,12 @@ export class AdcreateComponent implements OnInit {
       price: new FormControl(0),
       categoryId: new FormControl(0),
       photo: new FormControl(),
+      brandId: new FormControl(0),
+      townId: new FormControl(0),
     });
     this.numberOfFiles = 3;
     this.getCats();
+    this.getTowns();
     for (let i = 0; i < this.numberOfFiles; i++) {
       this.imgUrls[i] = '/assets/images/random.jpg';
     }
@@ -47,35 +54,44 @@ export class AdcreateComponent implements OnInit {
     );
   }
 
+  getTowns() {
+    this.townservice.getAll().subscribe(
+      response => {
+        this.towns = response;
+      }, error => {
+        this.toast.error(error);
+      }
+    );
+  }
+
   onFileAttach($event) {
 
     for (let i = 0; i < $event.target.files.length; i++) {
-        const file = $event.target.files[i];
-        this.pictures.push(file);
-        // Asp.net core has to accept [FromForm] MyAnnoucementDto
-        // MyAnnoucementDto has to have List<IFormFile>
-        this.formData.append('photo', file, file.name);
-        const fileReader = new FileReader();
-        fileReader.onload = ((event: any) =>
-        {
-          this.imgUrls[i] = event.target.result;
-          // Asp.net core has to accept [FromForm] IFormCollection to work for these options:
-          //this.formData.append(`photo[${i}]`, file);
-          // OR
-          //this.formData.append(`photo[]`, file);
-        });
-        fileReader.readAsDataURL(file);
+      const file = $event.target.files[i];
+      this.pictures.push(file);
+      // Asp.net core has to accept [FromForm] MyAnnoucementDto
+      // MyAnnoucementDto has to have List<IFormFile>
+      this.formData.append('photo', file, file.name);
+      const fileReader = new FileReader();
+      fileReader.onload = ((event: any) => {
+        this.imgUrls[i] = event.target.result;
+        // Asp.net core has to accept [FromForm] IFormCollection to work for these options:
+        //this.formData.append(`photo[${i}]`, file);
+        // OR
+        //this.formData.append(`photo[]`, file);
+      });
+      fileReader.readAsDataURL(file);
     }
 
   }
 
-  optionSelected(option: string) {
-    return this.selectedCategory === option;
+  optionSelected(category: Category) {
+    return this.selectedCategory === category;
   }
 
   selectChanged($event) {
-    console.log($event.target.value);
-    this.selectedCategory = $event.target.value;
+    const id = $event.target.value;
+    this.selectedCategory = this.categories.find(x => x.categoryId == id);
   }
 
   toFormData() {
@@ -83,24 +99,16 @@ export class AdcreateComponent implements OnInit {
     this.formData.append('description', this.advertForm.value.description);
     this.formData.append('price', this.advertForm.value.price);
     this.formData.append('categoryId', this.advertForm.value.categoryId);
-    this.formData.append('userId', '1');
+//    this.formData.append('townId', this.advertForm.value.townId);
+    if (this.advertForm.value.brandId) {
+      this.formData.append('brandId', this.advertForm.value.brandId);
+     }
   }
 
 
-  
+
   submit() {
     this.toFormData();
-    console.log(this.formData.get('title'));
-    console.log(this.formData.get('descriptio'));
-    console.log(this.formData.get('price'));
-    console.log(this.formData.get('categoryId'));
-    console.log(this.formData.getAll('photo[]'));
-    console.log(this.formData);
-    console.log(typeof(this.formData.get('photo')));
-    console.log(this.formData.get('photo'));
-
-
-
     this.service.createAd(this.formData).subscribe(response => {
       console.log(response);
       this.router.navigateByUrl('/ads');

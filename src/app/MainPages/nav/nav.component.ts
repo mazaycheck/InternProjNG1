@@ -11,23 +11,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-
-  model: any = {};
+  hide = true;
+  loginData: any = {};
   name: string;
 
-  constructor(public service: AuthService, private toast: ToastrService, private router: Router) { }
+  constructor(public authService: AuthService, private toast: ToastrService, private router: Router) { }
 
   ngOnInit() {
-    this.isLoggedIn();
+    if (this.isLoggedIn()) {
+      this.name = this.authService.getCurrentUserName();
+    }
   }
 
   login() {
 
-    this.service.login(this.model).subscribe(
+    this.authService.login(this.loginData).subscribe(
       response => {
         if (response) {
           localStorage.setItem('token' , response.token);
-          this.isLoggedIn();
+          this.name = this.authService.getCurrentUserName();
           this.toast.success('Logged in');
         }
       }, error => {
@@ -37,19 +39,12 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    this.authService.logout();
     this.router.navigateByUrl('/');
     this.toast.warning('Logged out');
   }
   isLoggedIn() {
-     const result = this.service.isLoggedIn();
-
-     if (result) {
-       this.name = result;
-       return true;
-     } else {
-       return false;
-     }
+     return  this.authService.isLoggedIn();
   }
 
 }

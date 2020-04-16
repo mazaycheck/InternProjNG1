@@ -1,20 +1,42 @@
-<div class="d-flex align-items-center justify-content-between p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+<mat-toolbar color="" class="justify-content-between p-4" >
+  <mat-list class="d-flex">
+    <mat-list-item><a [routerLink]="['/ads']" routerLinkActive="router-link-active">Advertisements </a></mat-list-item>
+    <mat-list-item><a routerLink="/categories"><span color="accent">Categories</span></a></mat-list-item>
+    <mat-list-item><a routerLink="/towns">Towns</a></mat-list-item>
+    <mat-list-item><a routerLink="/brands">Brands</a></mat-list-item>
+  </mat-list>
   
-  <nav class="my-2 my-md-0 mr-md-3 nav">
-    <a class="nav-item nav-link" [routerLink]="['/ads']" routerLinkActive="router-link-active">Advertisements </a>
-    <a class="nav-item nav-link" routerLink="/categories">Categories</a>
-    <a class="nav-item nav-link" routerLink="/towns">Towns</a>
-    <a class="nav-item nav-link" routerLink="/brands">Brands</a>
-  </nav>
-<form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login()" class="d-flex mr-3 ">
-  <input type="text" name="email" [(ngModel)]="model.email" class="form-control mr-3">
-  <input type="password" name="password" [(ngModel)]="model.password" class="form-control mr-3">
-  <input type="submit" class="btn btn-info mr-3" value="Login">
-  <a [routerLink]="['/auth/register']" routerLinkActive="router-link-active"  class="btn btn-primary d-inline-block" href="#">Register</a>
-</form>  
-<div *ngIf="isLoggedIn()">
-  <h4 class="d-inline-block m-3">Welcome {{name | titlecase }}</h4>
-  <button  class="btn btn-danger d-inline-block mr-3 mb-2" (click)="logout()">Log Out</button>
-  
-</div>
-</div>
+  <mat-list class="d-flex">
+
+
+    <form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login()" class="d-flex mr-3 ">
+
+      <mat-form-field class="mr-3">
+        <mat-label>Email</mat-label>
+        <input matInput type="text" name="email" [(ngModel)]="loginData.email" class="mr-3">
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input matInput type="password" name="password" [(ngModel)]="loginData.password" class="mr-3" [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+            
+      <div class="d-flex align-items-center ml-3">
+        <button mat-raised-button color="accent" type="submit" class="mr-3">Login</button>
+        <button mat-raised-button color="warn" class="" [routerLink]="['/auth/register']" routerLinkActive="router-link-active">Register</button>
+      </div>
+
+    </form>  
+
+    <div *ngIf="isLoggedIn()" class="mr-3">
+      <h4 class="d-inline-block mr-3">Welcome {{ name | titlecase }}</h4>
+      <button mat-raised-button color="warn" class="d-inline-block" (click)="logout()">Log Out</button>
+    </div>
+  </mat-list>
+</mat-toolbar>
+

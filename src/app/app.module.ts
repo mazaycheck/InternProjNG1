@@ -13,13 +13,10 @@ import { AddetailComponent } from './MainPages/Advert/addetail/addetail.componen
 import { AdcreateComponent } from './MainPages/Advert/adcreate/adcreate.component';
 import { AdupdateComponent } from './MainPages/Advert/adupdate/adupdate.component';
 import { AuthService } from './services/auth/auth.service';
-
-
 import { RegistrationComponent } from './MainPages/registration/registration.component';
 import { GlobalsService } from './services/global/globals.service';
 import { CatService } from './services/Repositories/cat.service';
 import { CatlistComponent } from './MainPages/Category/catlist/catlist.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { ErrorInterceptorService } from './services/err/errorInterceptor.service';
@@ -30,7 +27,12 @@ import { CatcreateComponent } from './MainPages/Category/catcreate/catcreate.com
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TownListComponent } from './MainPages/Town/townList/townList.component';
 import { BrandListComponent } from './MainPages/Brand/brandList/brandList.component';
+import { JwtTokenInterceptorService } from './services/auth/jwtTokenInterceptor.service';
+import { MaterialModule} from './material/material.module';
 
+export function toketGetter(){
+   return localStorage.getItem('token');
+}
 
 @NgModule({
    declarations: [
@@ -63,6 +65,10 @@ import { BrandListComponent } from './MainPages/Brand/brandList/brandList.compon
          positionClass: 'toast-bottom-right',
          preventDuplicates: true}),
       FontAwesomeModule,
+      MatSliderModule,
+      MaterialModule
+ 
+
    ],
    providers: [
       AdvertService,
@@ -74,6 +80,11 @@ import { BrandListComponent } from './MainPages/Brand/brandList/brandList.compon
          useClass: ErrorInterceptorService,
          multi: true
       },
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: JwtTokenInterceptorService,
+         multi: true
+      }
 
 
    ],

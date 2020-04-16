@@ -9,13 +9,37 @@
 
     <select class="custom select bg-light form-control" required (change)="selectChanged($event)" formControlName="categoryId">
       <!-- <option [selected]="optionSelected('')" value="" >Select Category</option> -->
-      <option *ngFor="let cat of categories" [value]="cat.categoryId" [selected]="optionSelected(cat.title)">
-        {{ cat.title }}
-      </option>
+      <ng-container *ngIf="categories.length">
+        <option *ngFor="let cat of categories" [value]="cat.categoryId">
+          {{ cat.title }}
+        </option>
+      </ng-container>
     </select>
-   
     <small id="helpId" class="text-muted">Help text</small>
-  </div> 
+</div> 
+
+<div class="form-group" *ngIf="selectedCategory?.brands?.length">
+  <label for="title">Brand</label>
+    <select class="custom select bg-light form-control"  formControlName="brandId">      
+        <option *ngFor="let brand of selectedCategory.brands" [value]="brand.brandId">
+          {{ brand.title }}
+        </option>
+    </select>
+    <small id="helpId" class="text-muted">Help text</small>
+</div>
+
+<!-- <div class="form-group">
+  <label for="title">Town</label>
+  <select class="custom select bg-light form-control" required  formControlName="townId">    
+    <ng-container *ngIf="towns.length">
+      <option *ngFor="let town of towns" [value]="town.townId">
+        {{ town.title }}
+      </option>
+    </ng-container>
+  </select>
+  <small id="helpId" class="text-muted">Help text</small>
+</div>   -->
+
   <div class="form-group">
     <label for="title">Price</label>
     <input type="number" name="" id="price" name="price" class="form-control" placeholder="" aria-describedby="helpId" formControlName="price">

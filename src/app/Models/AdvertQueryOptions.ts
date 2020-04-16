@@ -1,8 +1,8 @@
 export class AdvertQueryOptions {
     orderBy: string = 'date';
     direction: string = 'desc';
-    pageNumber: number = 1;
-    pageSize: number = 3;
+    pageNumber: number;
+    pageSize: number;
     category: string = '';
     query: string = '';
 }

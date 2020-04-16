@@ -1,11 +1,12 @@
 <a class="btn btn-success mb-3" (click)="switchAddMode()">Add a new brand</a>
 
-<ul *ngIf="brands.length && categories.length" class="list-group">
+<ul class="list-group">
+  <ng-container *ngIf="brands.length && categories.length">
     <li *ngFor="let brand of brands" class="list-group-item">
 
       <div *ngIf="!brand.edit" class="row">
         <p class="col-md-5">{{ brand.title }}</p>
-        <p class="col-md-5">{{ getCatName(brand) }}</p>
+        <p class="col-md-5">{{ brand.categoryName }}</p>
         <button class="btn btn-warning mr-3" (click)="update(brand)"><fa-icon [icon]="EditIcon"></fa-icon></button>
         <button class="btn btn-danger" (click)="delete(brand)"><fa-icon [icon]="DeleteIcon"></fa-icon></button>
       </div>
@@ -16,9 +17,9 @@
         </select>    
         <button class="btn btn-success mr-3" (click)="editSave(brand)"> <fa-icon [icon]="SaveIcon"></fa-icon></button>
         <button class="btn btn-info" (click)="editCancel(brand)"> <fa-icon [icon]="CancelIcon"></fa-icon> </button>
-      </div>
-      
+      </div>      
     </li>
+  </ng-container>
 
     <li *ngIf="addMode" class="list-group-item">
       <div>

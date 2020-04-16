@@ -18,6 +18,9 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'login', model);
   }
 
+  logout() {
+    localStorage.removeItem('token');
+  }
   register(model): Observable<any> {
     return this.http.post(this.baseUrl + 'register', model);
   }
@@ -26,18 +29,38 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
+  getToken(): string {
+    return localStorage.getItem('token');
+  }
+
   isLoggedIn() {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     if (token) {
       const decoded = jwt_decode(token);
       if (decoded.exp > (Date.now().valueOf() / 1000)) {
-        return decoded.unique_name;
+        return true;
       } else {
         localStorage.removeItem('token');
-        return null;
+        return false;
       }
     } else {
-      return null;
+      return false;
+    }
+  }
+
+  getCurrentUserName() {
+    const token = this.getToken();
+    if (token) {
+      const decoded = jwt_decode(token);
+      return decoded.unique_name;
+    }
+  }
+
+  gettCurrentUserId() {
+    const token = this.getToken();
+    if (token) {
+      const decoded = jwt_decode(token);
+      return decoded.nameid;
     }
   }
 }

@@ -1,3 +1,6 @@
+import { Category } from './Category';
+import { Brand } from './brand';
+
 export class Advert {
     annoucementId: number;
     title: string;
@@ -9,10 +12,9 @@ export class Advert {
     negotiable: boolean;
     isActive: boolean;
     categoryId: number;
-    category: {
-        categoryId: number,
-        title: string,
-        brands: null
+    brandCategory: {
+        category: Category;
+        brand: Brand;
     };
     user: {
         userId: number,

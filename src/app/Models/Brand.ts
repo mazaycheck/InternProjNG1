@@ -1,6 +1,7 @@
 export class Brand {
     brandId: number;
-    categoryId : number;
-    title: string;
+    title : string;
+    categoryId: number;
+    categoryName: string;
     edit = false;
 }

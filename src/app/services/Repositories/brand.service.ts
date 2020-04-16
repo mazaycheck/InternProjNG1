@@ -19,6 +19,7 @@ export class BrandService {
     return this.http.get(this.baseUrl);
   }
   getById() { }
+  
   create(brand: Brand): Observable<any> {
     return this.http.post(this.baseUrl, brand);
   }
