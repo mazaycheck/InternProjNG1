@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
+import { RegistrationComponent } from '../registration/registration.component';
 
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.css'],
+  // encapsulation : ViewEncapsulation.None,
 })
 export class NavComponent implements OnInit {
   hide = true;
   loginData: any = {};
   name: string;
 
-  constructor(public authService: AuthService, private toast: ToastrService, private router: Router) { }
+  constructor(public authService: AuthService, private toast: ToastrService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit() {
     if (this.isLoggedIn()) {
@@ -31,6 +34,7 @@ export class NavComponent implements OnInit {
           localStorage.setItem('token' , response.token);
           this.name = this.authService.getCurrentUserName();
           this.toast.success('Logged in');
+          this.router.navigateByUrl('/ads');
         }
       }, error => {
         this.toast.error(error);
@@ -45,6 +49,12 @@ export class NavComponent implements OnInit {
   }
   isLoggedIn() {
      return  this.authService.isLoggedIn();
+  }
+
+  onRegister(){
+    const config = new MatDialogConfig();
+    config.width = '30%';
+    this.dialog.open(RegistrationComponent, config);
   }
 
 }

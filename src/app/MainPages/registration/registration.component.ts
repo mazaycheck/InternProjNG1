@@ -7,7 +7,7 @@ import { NgForOf } from '@angular/common';
 import { Router } from '@angular/router';
 import { ErrorInterceptorService } from '../../services/err/errorInterceptor.service';
 import { ToastrService } from 'ngx-toastr';
-
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-registration',
@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private service: AuthService, private router: Router, private toast: ToastrService) { }
+  constructor(private service: AuthService, private router: Router, private toast: ToastrService, private dialog: MatDialog) { }
 
  model: any = {};
 
@@ -36,6 +36,7 @@ export class RegistrationComponent implements OnInit {
     this.service.register(this.model).subscribe(
       response => {
         this.toast.success('Registered!');
+        this.dialog.closeAll();
         if (response) {
           if (this.model.checkout === true) {
           this.service.login(this.model).subscribe(r => {

@@ -9,3 +9,11 @@ a{
 table {
     width: 100%;
   }
+
+  .link{
+      font-size: large;
+  }
+
+  .mat-header-cell{
+      font-size: large;
+  }

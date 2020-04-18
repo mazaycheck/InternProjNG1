@@ -1,23 +1,25 @@
 <div class="container">
   <div  *ngIf="advert" class="row" >   
     <div class="col-lg-6">
-      <div class="card">
+      <mat-card >
         <div class="card-body">
           <div class="d-flex justify-content-between">
-          <h3 class="card-title">
-            {{ advert.title }}
-          </h3>
+          <mat-card-header >
+            <h3>{{ advert.title }}</h3>
+          </mat-card-header>
+          <mat-card-header>
           <h3 >
             <span class="badge badge-info">{{ advert.price | currency }}</span>
           </h3>
+        </mat-card-header>
         </div>
           <div class="m-1" style="width: 100%; padding-top: 100%; background-color: rgba(255, 208, 107, 0.52); position: relative">
             <img style="width:100%; height: 100%;display: block; position:absolute; top:0; left:0; object-fit: cover; " *ngIf="advert.photos.length > 0"
-            [src]="baseUrlForImages + advert.annoucementId + '/' + selectedImage" class="d-inline-block">
+            [src]="baseUrlForImages + advert.id + '/' + selectedImage" class="d-inline-block">
           </div>
           <div style="width: 150px; height: 150px; overflow: hidden; cursor: pointer;" *ngFor="let photo of advert.photos" class="d-inline-block m-2" (click)="changeSelectedImage(photo.photoUrl)">
             <img  style="width: 100%; height: 100%; object-fit: cover ;" 
-            [src]="baseUrlForImages + advert.annoucementId + '/' + photo.photoUrl" class="d-inline-block" [ngClass]="photo.photoUrl == selectedImage ? 'img-border' : ''">
+            [src]="baseUrlForImages + advert.id + '/' + photo.photoUrl" class="d-inline-block" [ngClass]="photo.photoUrl == selectedImage ? 'img-border' : ''">
 
           </div>
           <p class="card-text">
@@ -26,17 +28,17 @@
         </div>
         <div class="card-footer">
         </div>
-      </div>
+      </mat-card>
     </div>
       <div class="col-lg-6">
         <div class="card w-100">
           <div class="card-header">
-            <h3>{{ advert.user.name }}</h3>
+            <h3>{{ advert.userName }}</h3>
           </div>
           <div class="card-body">
 
             <div class="card-text">
-              <h5>Phone number: {{ advert.user.phoneNumber }}</h5>
+              <h5>Phone number: {{ advert.userPhoneNumber }}</h5>
               <hr>
               <p>
                 {{ advert.description }}      

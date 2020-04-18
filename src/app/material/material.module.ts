@@ -17,6 +17,10 @@ import {MatListModule} from '@angular/material/list';
 
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatGridListModule } from '@angular/material/grid-list';
+import {MatCardModule } from '@angular/material/card';
 
 
 
@@ -40,7 +44,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
      MatListModule,
      MatPaginatorModule,
      MatTableModule,
-
+     MatSortModule,
+     MatDialogModule,
+     MatGridListModule,
+     MatCardModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -59,7 +66,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatListModule,
     MatPaginatorModule,
     MatTableModule,
-
+    MatSortModule,
+    MatDialogModule,
+    MatGridListModule,
+    MatCardModule,
   ]
 })
 export class MaterialModule { }

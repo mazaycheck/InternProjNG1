@@ -1,35 +1,54 @@
-<form #registerForm="ngForm" (ngSubmit)="register()">
-  <div class="form-group">
-    <label for="exampleInputName">Your name</label>
-    <input type="text" class="form-control" id="exampleInputName" name="name" [(ngModel)]="model.name" >    
-  </div>
 
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" name="email" [(ngModel)]="model.email" >
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <p  class="m-0">Register new account</p>
+  </mat-toolbar-row>
+</mat-toolbar>
+<br>
 
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon2">373</span>
-    </div>
-    <input type="text" class="form-control" placeholder="Phone Number" name ="phonenumber" [(ngModel)]="model.phonenumber">
-  </div>
+<form #registerForm="ngForm" (ngSubmit)="register()" class="justify-content-between">
 
-  <div class="input-group mb-3">
+<mat-grid-list cols="2" rowHeight="100px">
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Your Name</mat-label>
+      <input matInput type="text"  name="name" [(ngModel)]="model.name" >  
+    </mat-form-field>
+  </mat-grid-tile>
 
-    <input type="number" class="form-control" placeholder="Town" name ="townid" [(ngModel)]="model.townid" >
-  </div>
-  
+<mat-grid-tile>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput type="email"  name="email" [(ngModel)]="model.email" >
+  </mat-form-field>
+</mat-grid-tile>
 
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" [(ngModel)]="model.password">
-  </div>
-  <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="checkout" [(ngModel)]="model.checkout">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <input type="submit" class="btn btn-primary" value="Register">
+
+<mat-grid-tile>
+  <mat-form-field appearance="fill">
+    <mat-label>Phone Number</mat-label>
+    <input matInput type="text"   name ="phonenumber" [(ngModel)]="model.phonenumber">
+  </mat-form-field>
+</mat-grid-tile>
+
+<mat-grid-tile>
+  <mat-form-field appearance="fill">
+    <mat-label>HomeTown</mat-label>
+    <input matInput type="number"  name ="townid" [(ngModel)]="model.townid" >
+  </mat-form-field>
+</mat-grid-tile>
+
+<mat-grid-tile>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput type="password"   name="password" [(ngModel)]="model.password">
+  </mat-form-field>     
+</mat-grid-tile>
+
+<mat-grid-tile>
+  <button mat-raised-button color="accent" type="submit" class="mr-3">Register</button>
+  <mat-slide-toggle [(ngModel)]="model.checkout" name="checkout">Checkout</mat-slide-toggle>
+
+</mat-grid-tile> 
+</mat-grid-list>
 </form>

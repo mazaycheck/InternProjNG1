@@ -90,6 +90,8 @@ export function toketGetter(){
    ],
    bootstrap: [
       AppComponent
-   ]
+   ],
+   entryComponents: [RegistrationComponent]
+
 })
 export class AppModule { }

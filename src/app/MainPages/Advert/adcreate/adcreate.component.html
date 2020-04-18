@@ -1,55 +1,47 @@
+<br>
 <form [formGroup]="advertForm" (ngSubmit)="submit()">
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" name="" id="title" name="title" class="form-control" placeholder="" aria-describedby="helpId" formControlName="title">
-    <small id="helpId" class="text-muted">Help text</small>
-  </div> 
-  <div class="form-group">
-    <label for="title">Category</label>
+  <mat-form-field class="mr-3">
+    <mat-label>Title</mat-label>
+    <input matInput type="text" id="title" name="title" formControlName="title">    
+  </mat-form-field>
 
-    <select class="custom select bg-light form-control" required (change)="selectChanged($event)" formControlName="categoryId">
-      <!-- <option [selected]="optionSelected('')" value="" >Select Category</option> -->
+  <mat-form-field>
+    <mat-select required (change)="selectChanged($event)" formControlName="categoryId">
+  
       <ng-container *ngIf="categories.length">
-        <option *ngFor="let cat of categories" [value]="cat.categoryId">
+        <mat-option *ngFor="let cat of categories" [value]="cat.categoryId">
           {{ cat.title }}
-        </option>
+        </mat-option>
       </ng-container>
-    </select>
-    <small id="helpId" class="text-muted">Help text</small>
-</div> 
+    </mat-select>
+  </mat-form-field>
+    
 
-<div class="form-group" *ngIf="selectedCategory?.brands?.length">
-  <label for="title">Brand</label>
-    <select class="custom select bg-light form-control"  formControlName="brandId">      
-        <option *ngFor="let brand of selectedCategory.brands" [value]="brand.brandId">
+
+
+  <mat-form-field *ngIf="selectedCategory?.brands?.length">
+  <mat-label for="title">Brand</mat-label>
+    <mat-select class="custom select bg-light form-control"  formControlName="brandId">      
+        <mat-option *ngFor="let brand of selectedCategory.brands" [value]="brand.brandId">
           {{ brand.title }}
-        </option>
-    </select>
-    <small id="helpId" class="text-muted">Help text</small>
-</div>
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<!-- <div class="form-group">
-  <label for="title">Town</label>
-  <select class="custom select bg-light form-control" required  formControlName="townId">    
-    <ng-container *ngIf="towns.length">
-      <option *ngFor="let town of towns" [value]="town.townId">
-        {{ town.title }}
-      </option>
-    </ng-container>
-  </select>
-  <small id="helpId" class="text-muted">Help text</small>
-</div>   -->
 
-  <div class="form-group">
-    <label for="title">Price</label>
-    <input type="number" name="" id="price" name="price" class="form-control" placeholder="" aria-describedby="helpId" formControlName="price">
-    <small id="helpId" class="text-muted">Help text</small>
-  </div> 
-  <div class="form-group">
-    <label for="title">Description</label>
-    <textarea class="form-control" formControlName="description" rows=3></textarea>
-    <small id="helpId" class="text-muted">Help text</small>
-  </div> 
+  
+<mat-form-field>
+  
+    <mat-label for="title">Price</mat-label>
+    <input matInput type="number" name="" id="price" name="price" class="form-control" placeholder="" aria-describedby="helpId" formControlName="price">
+  
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-label for="title">Description</mat-label>
+    <textarea matInput class="form-control" formControlName="description" rows=3></textarea>
+  </mat-form-field>
+  
   
   <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -57,21 +49,18 @@
     </div>
     
     <div class="custom-file">      
+      
       <input type="file" multiple class="custom-file-input" value="Choose am image" id="inputFile1" (change)="onFileAttach($event)" formControlName="photo">
         <label class="custom-file-label" for="inputFile1" >Choose file</label>
+      
     </div>
   </div>
   <div class="mb-3">
     <div *ngFor="let url of imgUrls" style="width:200px;height:200px;overflow:hidden;" class="d-inline-block">
       <img style="width:100%;height:100%;object-fit: cover"  [src]="url" class="img-thumbnail d-inline-block" >
-    </div>
-    <!-- <img width="200px" height="150px" [src]="imgUrls[1]" class="img-thumbnail d-inline-block" >
-    <img width="200px" height="150px" [src]="imgUrls[2]" class="img-thumbnail d-inline-block" >
-    <img width="200px" height="150px" [src]="imgUrls[3]" class="img-thumbnail d-inline-block" >
-    <img width="200px" height="150px" [src]="imgUrls[4]" class="img-thumbnail d-inline-block" >
-    <img width="200px" height="150px" [src]="imgUrls[5]" class="img-thumbnail d-inline-block" > -->
+    </div>   
   </div>
-  <input type="submit"  class="btn btn-success d-block">
+  <input mat-button type="submit">
   
  
 </form>

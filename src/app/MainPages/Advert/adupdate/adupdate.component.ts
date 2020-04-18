@@ -32,7 +32,7 @@ export class AdupdateComponent implements OnInit {
 
   updateAd() {
     const values = this.updateForm.value;
-    values.annoucementId = this.ad.annoucementId;
+    values.annoucementId = this.ad.id;
     values.userId = this.ad.userId;
     values.categoryId = this.ad.categoryId;
     this.service.updateAd(values).subscribe(

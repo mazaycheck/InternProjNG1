@@ -2,32 +2,18 @@ import { Category } from './Category';
 import { Brand } from './brand';
 
 export class Advert {
-    annoucementId: number;
+    id: number;
     title: string;
     description: string;
-    userId: number;
-    createDate: Date;
-    expireDate: Date;
+    date: Date;
     price: number;
-    negotiable: boolean;
-    isActive: boolean;
     categoryId: number;
-    brandCategory: {
-        category: Category;
-        brand: Brand;
-    };
-    user: {
-        userId: number,
-        name: string,
-        email: string,
-        townId: number,
-        phoneNumber: string,
-        town: {
-            townId: number,
-            title: string,
-            coordX: number,
-            coordY: number
-        }
-    };
+    categoryName: string;
+    brandId: number;
+    brandName: string;
     photos: any[];
+    userId: number;
+    userName: string;
+    userPhoneNumber: string;
+    userTown: string;
 }
