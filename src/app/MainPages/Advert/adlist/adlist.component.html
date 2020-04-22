@@ -1,9 +1,15 @@
 
 <br>
+
+
+<mat-card class="mb-4 mat-elevation-z8 py-1">
 <a mat-raised-button color="primary" [routerLink]="['/ads/new']" routerLinkActive="router-link-active" class="d-inline-block mr-3">Create New Advert</a>
+
 <mat-form-field class="mr-3 d-inline-block">
   <mat-label>Filter</mat-label>
-  <input matInput name="searchQuery" [(ngModel)]="queryOptions.query" (ngModelChange)="queryChanged($event)">
+  
+    <input matInput name="searchQuery"  [formControl]="filter">
+  
 </mat-form-field>
 
 <mat-form-field class="d-inline-block"> 
@@ -20,6 +26,8 @@
       
   </mat-select>
 </mat-form-field>
+</mat-card>
+
 
 <table mat-table [dataSource]="advertisements" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
 
@@ -77,7 +85,8 @@
 <mat-paginator [length]="length"
               [pageSize]="pageSize"
               [pageSizeOptions]="pageSizeOptions"
-              (page)="pageClicked($event)">
+              (page)="pageClicked($event)"
+              class="mat-elevation-z8">
 </mat-paginator>
 
 

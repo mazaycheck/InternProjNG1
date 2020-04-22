@@ -1,6 +1,3 @@
-import { Category } from './Category';
-import { Brand } from './brand';
-
 export class Advert {
     id: number;
     title: string;
@@ -11,9 +8,10 @@ export class Advert {
     categoryName: string;
     brandId: number;
     brandName: string;
-    photos: any[];
+    photoUrls: string[];
     userId: number;
     userName: string;
     userPhoneNumber: string;
     userTown: string;
+    brandCategoryId: number;
 }

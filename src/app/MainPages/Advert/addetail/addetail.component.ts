@@ -24,8 +24,8 @@ export class AddetailComponent implements OnInit {
       this.advert = response;
       console.log(this.advert);
       this.condition =  true;
-      if (this.advert.photos.length > 0) {
-        this.selectedImage = this.advert.photos[0].photoUrl;
+      if (this.advert.photoUrls.length > 0) {
+        this.selectedImage = this.advert.photoUrls[0];
       }
     });
   }

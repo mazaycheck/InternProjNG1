@@ -14,13 +14,13 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
-
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatGridListModule } from '@angular/material/grid-list';
 import {MatCardModule } from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 
@@ -48,6 +48,8 @@ import {MatCardModule } from '@angular/material/card';
      MatDialogModule,
      MatGridListModule,
      MatCardModule,
+     MatExpansionModule
+ 
   ],
   exports: [
     MatAutocompleteModule,
@@ -70,6 +72,8 @@ import {MatCardModule } from '@angular/material/card';
     MatDialogModule,
     MatGridListModule,
     MatCardModule,
+    MatExpansionModule
+
   ]
 })
 export class MaterialModule { }

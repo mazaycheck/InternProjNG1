@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BrandService } from 'src/app/services/Repositories/brand.service';
-import { Brand } from 'src/app/Models/brand';
 import { ToastrService } from 'ngx-toastr';
-import { faEdit, faTrash, faSave, faBan } from '@fortawesome/free-solid-svg-icons';
+import { BrandCategoryService } from 'src/app/services/Repositories/brandCategory.service';
 import { CatService } from 'src/app/services/Repositories/cat.service';
-import { Category } from 'src/app/Models/Category';
+import { Brand } from 'src/app/Models/brand';
+import { BrandCategory } from 'src/app/Models/BrandCategory';
+import { Observable, merge, empty, concat } from 'rxjs';
+import { mergeAll, concatAll } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -13,74 +15,133 @@ import { Category } from 'src/app/Models/Category';
   styleUrls: ['./brandList.component.css']
 })
 export class BrandListComponent implements OnInit {
-  DeleteIcon = faTrash;
-  EditIcon = faEdit;
-  SaveIcon = faSave;
-  CancelIcon = faBan;
-  brands: Brand[] = [];
-  categories: Category[] = [];
+
+
+  service: any;
+  brandList = [];
+  temproraryEntity: { title: '', edit: boolean, categoriesSelected: {} };
   addMode = false;
-  temporaryBrand: Brand;
-  constructor(private repo: BrandService, private catService: CatService, private toast: ToastrService) { }
+  displayedColumns = ['title', 'categories', 'action'];
+  newEntity = { title: '' };
+  userCategoriesSelected: {} = {};
+  brandCategoryFromDb: { brandId: number, categoryId: number, brandCategoryId: number }[] = [];
+  allBrandCategories: BrandCategory[] = [];
+  categoriesOfABrand: string[] = [];
+  catsCheckBoxDisabled = true;
+
+  // brandCategory: {brandId: number, categoryId: number}[] = [];
+  brandCategory: number[] = [];
+  allCategories = [];
+
+  constructor(private toastr: ToastrService, brandService: BrandService,
+    private brandCategoryService: BrandCategoryService, private categoryService: CatService) { this.service = brandService; }
 
   ngOnInit() {
+    this.getCategories();
     this.refresh();
   }
 
-  refresh() {
-    this.repo.getAll().subscribe(
-      response => {
-        this.brands = response;
-      },
-      error => {
-        this.toast.error(error);
-      }
-    );
-    this.catService.getAll().subscribe(success => {
-      this.categories = success;
+
+  getAllBrandCategories() {
+    this.brandCategoryService.getAll().subscribe(response => {
+      this.allBrandCategories = response;
     });
-    this.temporaryBrand = new Brand();
-    this.addMode = false;
   }
 
-  update(brand: Brand) {
-    this.turnUpdateOffOnAllEtries();
-    brand.edit = true;
-    this.temporaryBrand = new Brand();
-    this.temporaryBrand.title = brand.title;
-    this.temporaryBrand.categoryId = brand.categoryId;
-    this.addMode = false;
+  getCategoryNameById(categoryId: number) {
+    return this.allCategories.find(x => x.categoryId === categoryId).title;
   }
-  delete(brand: Brand) {
-    this.repo.delete(brand).subscribe(
+
+  filterAllBrandCategories(brandId: number) {
+    return this.allBrandCategories.filter(x => x.brandId === brandId);
+  }
+
+  getCategoriesOfBrand(brandId: number) {
+    this.catsCheckBoxDisabled = true;
+    this.brandCategoryService.getAll({ brandId, categoryId: 0 }).subscribe(
       response => {
-        this.toast.success('Deleted brand with id : ' + brand.title);
-        this.refresh();
-      },
-      error => {
-        this.toast.error('Could not delete brand: ' + brand.title);
+        // this.brandCategory = response.map(x => x.categoryId);
+        this.brandCategoryFromDb = response;
+        this.brandCategory = this.brandCategoryFromDb.map(x => x.categoryId);
+        this.userCategoriesSelected = {};
+        this.brandCategory.forEach(element => {
+          this.userCategoriesSelected[element] = true;
+        });
+        this.catsCheckBoxDisabled = false;
+      });
+  }
+
+  getCategories() {
+    this.categoryService.getAll().subscribe(
+      response => {
+        this.allCategories = response;
       }
     );
   }
 
-  save() {
-    this.repo.create(this.temporaryBrand).subscribe(
+  getBrands() {
+    this.service.getAll().subscribe(
       response => {
+        this.brandList = response;
+      }
+    );
+  }
+
+  getCategoriesTitlesOfABrand(brandId: number) {
+    
+    const categoryIds = this.filterAllBrandCategories(brandId).map(x => x.categoryId);
+    const categoryTitles = categoryIds.map(categoryId => this.getCategoryNameById(categoryId));
+    return categoryTitles;
+  }
+
+  refresh() {
+    this.getAllBrandCategories();
+    this.getBrands();
+    this.resetTempEntity();
+    this.addMode = false;
+  }
+
+  update(entity) {
+    this.turnUpdateOffOnAllEtries();
+    entity.edit = true;
+    this.resetTempEntity();
+    this.temproraryEntity.title = entity.title;
+    this.temproraryEntity.categoriesSelected = this.userCategoriesSelected;
+    this.addMode = false;
+  }
+  delete(entity) {
+    this.service.delete(entity).subscribe(
+      response => {
+        this.toastr.success('Deleted entity  : ' + entity.title);
         this.refresh();
       },
       error => {
-        this.toast.error(error);
+        this.toastr.error('Could not delete entity: ' + entity.title);
+      }
+    );
+  }
+
+  createNewEntity() {
+    this.service.create(this.newEntity).subscribe(
+      response => {
+        this.refresh();
+        this.resetNewEntity();
+      },
+      error => {
+        this.toastr.error(error);
       }
     );
   }
 
   cancel() {
     this.addMode = false;
-    this.temporaryBrand = new Brand();
+    this.resetTempEntity();
   }
 
+
+
   turnUpdateOffOnAllEtries() {
-    this.brands.forEach(element => {
+    this.brandList.forEach(element => {
       element.edit = false;
     });
   }
@@ -88,40 +149,90 @@ export class BrandListComponent implements OnInit {
   switchAddMode() {
     this.addMode = true;
     this.turnUpdateOffOnAllEtries();
-    this.temporaryBrand = new Brand();
+    this.resetTempEntity();
   }
 
-  editSave(brand: Brand) {
-    if (brand.title === this.temporaryBrand.title && brand.categoryId === this.temporaryBrand.categoryId) {
-      brand.edit = false;
-      this.toast.info('No changes');
+
+  compareInputCategoriesArrays(entity) {
+    const listOfUserSelectedCategories = [];
+    let httpCalls = [];
+
+    for (const element in this.userCategoriesSelected) {
+      if (this.userCategoriesSelected[element] === true) {
+        listOfUserSelectedCategories.push(parseInt(element, 10));
+      }
+    }
+
+    listOfUserSelectedCategories.forEach(element => {
+      if (!this.brandCategory.find(x => x === element)) {
+        const newBrandCategory = new BrandCategory();
+        newBrandCategory.brandId = entity.brandId;
+        newBrandCategory.categoryId = element;
+        httpCalls.push(this.brandCategoryService.create(newBrandCategory));
+      }
+    }
+    );
+
+
+    this.brandCategory.forEach(element => {
+      if (!listOfUserSelectedCategories.find(x => x === element)) {
+        const toDelete = this.brandCategoryFromDb.find(x => x.categoryId === element);
+        httpCalls.push(this.brandCategoryService.delete(toDelete));
+      }
+    }
+    );
+
+    let mergedHttpObserver = merge(...httpCalls);
+    console.log(mergedHttpObserver);
+    mergedHttpObserver.subscribe((s) => { }, (e) => { }, () => {
+      this.getAllBrandCategories();
+      
+    });
+  }
+
+  editSave(entity) {
+
+    this.compareInputCategoriesArrays(entity);
+
+    if (entity.title === this.temproraryEntity.title) {
+      entity.edit = false;
+      this.toastr.info('No changes');
       return null;
-    } else if (brand.title.length === 0) {
-      brand.edit = false;
-      brand.title = this.temporaryBrand.title;
-      this.toast.warning('Cannot save empty string');
+    } else if (entity.title.length === 0) {
+      entity.edit = false;
+      entity.title = this.temproraryEntity.title;
+      this.toastr.warning('Cannot save empty string');
       return null;
     } else {
-      this.repo.update(brand).subscribe(
+      this.service.update(entity).subscribe(
         response => {
-          this.toast.success('Updated brand with id: ' + brand.brandId);
+          this.toastr.success('Updated entity  ' + entity.title);
           this.refresh();
-          brand.edit = false;
+          entity.edit = false;
         },
         error => {
-          this.toast.error('Could not update brand with id : ' + brand.brandId);
-          brand.edit = false;
+          this.toastr.error('Could not update entity : ' + entity.title);
+          entity.edit = false;
         }
-    );
-  } this.temporaryBrand = new Brand();
-}
-  editCancel(brand: Brand) {
-    brand.edit = false;
-    brand.title = this.temporaryBrand.title;
+      );
+      this.catsCheckBoxDisabled = true;
+    } this.resetTempEntity();
   }
 
-  getCatName(brand: Brand) {
-      return this.categories.find(x => x.categoryId == brand.categoryId).title;
+
+  editCancel(entity) {
+    entity.edit = false;
+    entity.title = this.temproraryEntity.title;
+    this.catsCheckBoxDisabled = true;
   }
+
+  resetTempEntity() {
+    this.temproraryEntity = { title: '', edit: false, categoriesSelected: {} };
+  }
+
+  resetNewEntity() {
+    this.newEntity = { title: '' };
+  }
+
 
 }

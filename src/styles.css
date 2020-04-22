@@ -5,9 +5,11 @@ html  { height: 100%; margin: 0; }
 
 body { 
     height: 100%;
+    padding: 0;
     margin: 0; 
     font-family: 'Abel', sans-serif !important;
     font-size: 1rem!important; 
+    background-color: #f5f5f5;
 }
 
 td{
@@ -20,33 +22,35 @@ p {
     font-size: 1.2rem;
 }
 
-/* a {
-    font-family: 'Baloo Thambi 2'!important;
-    font-size: 1.2rem;
-} */
 
-/* .btn {
-    font-family: 'Baloo Thambi 2'!important;
-    
-    font-size: 1.2rem;
-} */
-
-/* *:focus {
-    outline: none !important;
-    border: 0 !important;
-} */
 
 .hidden{
     visibility: hidden;
 }
 
 
-/* html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 
 
 #loginEmail{
     padding-bottom: 0!important;
     padding-top: 0!important;
 }
+
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0 1000px white inset !important; } 
+input:-webkit-autofill:focus { -webkit-box-shadow: 0 0 0 1000px white inset !important; }
+
+.mat-header-cell{
+    font-size: large;
+    font-weight: bold;
+}
+
+.mat-no-padding .mat-form-field-wrapper{
+    padding: 0!important;
+}
+
+.mat-no-padding .mat-form-field-infix {
+    padding: 0!important;
+    border-top: 0;
+}
+
 

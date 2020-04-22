@@ -11,7 +11,9 @@ import { AdvertQueryOptions } from 'src/app/Models/AdvertQueryOptions';
 import { PageObject } from 'src/app/Models/PageObject';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
-import {Sort} from '@angular/material/sort';
+import { Sort } from '@angular/material/sort';
+import { FormControl, FormGroup } from '@angular/forms';
+import { debounce, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 
@@ -42,6 +44,7 @@ export class AdlistComponent implements OnInit, OnChanges {
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
+  filter: FormControl;
 
 
   private _optionSelected: any;
@@ -74,7 +77,15 @@ export class AdlistComponent implements OnInit, OnChanges {
     this.globals.displayAdvertStyle = mode;
     this.presentationMode = mode;
   }
+
+  subscribeToSearchField() {
+    this.filter.valueChanges.pipe(debounceTime(500), distinctUntilChanged())
+    .subscribe(x => {this.queryOptions.query = x; this.refresh(); } );
+  }
+
   ngOnInit() {
+    this.filter =  new FormControl('');
+    this.subscribeToSearchField();
     this.presentationMode = this.globals.displayAdvertStyle;
     this.refresh();
     this.catservice.getAll().subscribe(
@@ -88,7 +99,6 @@ export class AdlistComponent implements OnInit, OnChanges {
 
   queryChanged($event) {
     this.refresh();
-
   }
 
   goToDetails(id: number) {
@@ -102,7 +112,7 @@ export class AdlistComponent implements OnInit, OnChanges {
   refresh() {
     this.adservice.getAds(this.queryOptions).subscribe(
       response => {
-        if(!response){
+        if (!response) {
           this.toast.warning('No data!');
           this.advertisements = [];
           return;
@@ -143,4 +153,4 @@ export class AdlistComponent implements OnInit, OnChanges {
     console.log(this.queryOptions);
   }
 
-  }
+}

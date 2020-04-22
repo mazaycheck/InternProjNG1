@@ -29,6 +29,7 @@ import { TownListComponent } from './MainPages/Town/townList/townList.component'
 import { BrandListComponent } from './MainPages/Brand/brandList/brandList.component';
 import { JwtTokenInterceptorService } from './services/auth/jwtTokenInterceptor.service';
 import { MaterialModule} from './material/material.module';
+import { GenericEntityComponent } from './MainPages/GenericEntity/GenericEntity.component';
 
 export function toketGetter(){
    return localStorage.getItem('token');
@@ -49,7 +50,8 @@ export function toketGetter(){
       TdupdateComponent,
       CatcreateComponent,
       TownListComponent,
-      BrandListComponent
+      BrandListComponent,
+      GenericEntityComponent,
    ],
    imports: [
       CommonModule,

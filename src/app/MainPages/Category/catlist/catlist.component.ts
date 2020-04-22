@@ -9,46 +9,10 @@ import { faSearch, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./catlist.component.css']
 })
 export class CatlistComponent implements OnInit {
-  SeachIcon = faSearch;
-  DeleteIcon = faTrash;
-  EditIcon = faEdit;
-  categories: Category[] = [];
-  constructor(private service: CatService) { }
 
-
-
-  hid = false;
-  addMode = false;
-
-  switch($event) {
-    // this.addMode = false;
-    this.refresh();
-    this.addMode = false;
-
-  }
+  constructor(public catService: CatService) { }
   ngOnInit() {
-    this.refresh();
-  }
-
-  refresh() {
-    this.service.getAll().subscribe(
-      response => {
-        this.categories = response;
-      }
-    );
-  }
-
-  removeAd(categoryId: number) {
 
   }
 
-
-  switchAddMode() {
-    this.addMode = true;
-  }
-
-  resetCats($event) {
-    console.log($event);
-    this.hid = false;
-  }
 }

@@ -14,13 +14,17 @@
         </mat-card-header>
         </div>
           <div class="m-1" style="width: 100%; padding-top: 100%; background-color: rgba(255, 208, 107, 0.52); position: relative">
-            <img style="width:100%; height: 100%;display: block; position:absolute; top:0; left:0; object-fit: cover; " *ngIf="advert.photos.length > 0"
-            [src]="baseUrlForImages + advert.id + '/' + selectedImage" class="d-inline-block">
+           
+              <img style="width:100%; height: 100%;display: block; position:absolute; top:0; left:0; object-fit: cover; " *ngIf="advert && advert.photoUrls.length > 0"
+              [src]="baseUrlForImages + advert.id + '/' + selectedImage" class="d-inline-block">
+              
           </div>
-          <div style="width: 150px; height: 150px; overflow: hidden; cursor: pointer;" *ngFor="let photo of advert.photos" class="d-inline-block m-2" (click)="changeSelectedImage(photo.photoUrl)">
-            <img  style="width: 100%; height: 100%; object-fit: cover ;" 
-            [src]="baseUrlForImages + advert.id + '/' + photo.photoUrl" class="d-inline-block" [ngClass]="photo.photoUrl == selectedImage ? 'img-border' : ''">
-
+          
+          <div style="width: 150px; height: 150px; overflow: hidden; cursor: pointer;" *ngFor="let photoUrl of advert.photoUrls" class="d-inline-block m-2" (click)="changeSelectedImage(photoUrl)">
+           
+              <img  style="width: 100%; height: 100%; object-fit: cover ;" 
+              [src]="baseUrlForImages + advert.id + '/' + photoUrl" class="d-inline-block" [ngClass]="photoUrl == selectedImage ? 'img-border' : ''">
+         
           </div>
           <p class="card-text">
             
@@ -43,6 +47,7 @@
               <p>
                 {{ advert.description }}      
               </p>
+              <h3></h3>
             </div>
           </div>
         </div>
