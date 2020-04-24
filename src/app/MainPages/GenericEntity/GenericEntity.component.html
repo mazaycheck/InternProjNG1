@@ -10,15 +10,15 @@
 <br>
 
 
-<div class="d-flex">
-
-  <mat-form-field appearance="outline" class="mat-no-padding pr-3" style="width:300px;">
-    <input matInput type="text" class="title-cell" [(ngModel)]="newEntity.title" placeholder="new entry here...">
+<div class="d-flex mb-3">
+<mat-card class="py-2">
+  <mat-form-field appearance="outline" class="mat-no-padding pr-3 d-inline-block align-center" style="width:284px;">
+    <input matInput type="text" class="title-cell " [(ngModel)]="newEntity.title" placeholder="new entry here...">
   </mat-form-field>
+  <button mat-raised-button color="primary"  (click)="createNewEntity()" class="d-inline-block align-center"><mat-icon>add</mat-icon> </button>
 
-<button mat-raised-button color="primary"  (click)="createNewEntity()" class="d-inline-block  mb-3"><mat-icon>add</mat-icon> </button>
-
-<button mat-raised-button color="accent" *ngIf="newEntity.title" (click)="resetNewEntity()" class="d-inline-block ml-3 mb-3"> <mat-icon>cancel</mat-icon> </button>
+<button mat-raised-button color="accent" *ngIf="newEntity.title" (click)="resetNewEntity()" class="d-inline-block align-center ml-3"> <mat-icon>cancel</mat-icon> </button>
+</mat-card>
 </div>
   <table mat-table [dataSource]="entityList" class="mat-elevation-z8">
 

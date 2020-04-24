@@ -1,11 +1,7 @@
-.title-cell{
-    min-width: 300px;
-}
-
-input.title-cell{
+/* input{
     padding-top:12px!important;
     padding-bottom: 6px!important;
-}
+} */
 
 .align-center{
     vertical-align: middle;

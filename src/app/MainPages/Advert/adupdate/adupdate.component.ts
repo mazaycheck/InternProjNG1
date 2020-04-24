@@ -1,59 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { FormGroup, FormControl } from '@angular/forms';
-// import { AdvertService } from 'src/app/services/Repositories/advert.service';
-// import { Router, ActivatedRoute } from '@angular/router';
-// import { Advert } from 'src/app/Models/Advert';
-
-// @Component({
-//   selector: 'app-adupdate',
-//   templateUrl: './adupdate.component.html',
-//   styleUrls: ['./adupdate.component.css']
-// })
-
-// export class AdupdateComponent implements OnInit {
-
-//   private id: number;
-//   private advert: Advert;
-//   advertForm: FormGroup; 
-
-//   constructor(private service: AdvertService, private route: ActivatedRoute, private router: Router) { }
-
-//   ngOnInit() {
-
-//     this.advertForm = new FormGroup({
-//       title: new FormControl(''),
-//       description: new FormControl(''),
-//       price: new FormControl(0),
-//       brandCategoryId: new FormControl(0),
-//       photo: new FormControl(),
-//       brandId: new FormControl(0),
-//       townId: new FormControl(0),}
-
-//     this.id = +this.route.snapshot.paramMap.get('id');
-//     this.service.getAd(this.id).subscribe(response => {
-//       this.advertFromDb = response;
-//       this.advertForm.patchValue({ title: this.advertFromDb.title, description: this.advertFromDb.description, price: this.advertFromDb.price ,
-//       brandCategoryId: advertFromDb.brandCategoryId, photo: this.advertFromDb.photoUrls});
-//      });
-//   }
-
-//   updateAd() {
-//     const values = this.updateForm.value;
-//     values.annoucementId = this.ad.id;
-//     values.userId = this.ad.userId;
-//     values.categoryId = this.ad.categoryId;
-//     this.service.updateAd(values).subscribe(
-//       response => {
-//         console.log(response);
-//         this.router.navigateByUrl('/ads');
-//       }
-//     );
-//   }
-
-// }
-
-
-
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AdvertService } from 'src/app/services/Repositories/advert.service';
@@ -67,6 +11,8 @@ import { Brand } from 'src/app/Models/brand';
 import { Advert } from 'src/app/Models/advert';
 import { BrandService } from 'src/app/services/Repositories/brand.service';
 import { environment } from 'src/environments/environment';
+import { BrandCategory } from 'src/app/Models/BrandCategory';
+import { BrandCategoryService } from 'src/app/services/Repositories/brandCategory.service';
 
 @Component({
   selector: 'app-adupdate',
@@ -87,12 +33,13 @@ export class AdupdateComponent implements OnInit {
   pictures: string[] = [];
   formData: FormData;
   brand: Brand;
+  brandsOfCategory: BrandCategory[] = [];
   constructor(private advertService: AdvertService, private router: Router, private catservice: CatService,
-              private toast: ToastrService, private townservice: TownService, private brandService: BrandService,
-              private route: ActivatedRoute) { }
+    private toast: ToastrService, private townservice: TownService, private brandService: BrandService,
+    private route: ActivatedRoute, private brandCatService: BrandCategoryService) { }
 
   ngOnInit() {
-    this.baseUrl  = environment.baseUrl;
+    this.baseUrl = environment.baseUrl;
     this.advertForm = new FormGroup({
       title: new FormControl(''),
       description: new FormControl(''),
@@ -105,19 +52,22 @@ export class AdupdateComponent implements OnInit {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.advertService.getAd(this.id).subscribe(response => {
       this.advertFromDb = response;
-      this.advertForm.patchValue({ 
-        title: this.advertFromDb.title, 
-        description: this.advertFromDb.description, 
-        price: this.advertFromDb.price ,
-        brandCategoryId: this.advertFromDb.brandCategoryId,
-        categoryId: this.advertFromDb.brandCategoryId
+      this.brandCatService.getById(this.advertFromDb.brandCategoryId).subscribe(response => {
+        this.getBrandsOfCategory(response.categoryId);
+        this.advertForm.patchValue({
+          title: this.advertFromDb.title,
+          description: this.advertFromDb.description,
+          price: this.advertFromDb.price,
+          brandCategoryId: this.advertFromDb.brandCategoryId,
+          categoryId: response.categoryId
+        });
       });
       this.imgUrls = this.advertFromDb.photoUrls;
     });
-    
+
     this.numberOfFiles = 3;
     this.getCats();
-    //this.getBrands();
+    this.getBrands();
     for (let i = 0; i < this.numberOfFiles; i++) {
       this.imgUrls[i] = '/assets/images/random.jpg';
     }
@@ -135,13 +85,14 @@ export class AdupdateComponent implements OnInit {
   }
 
 
-  getBrandCategoryInfo(id: number){
+  getBrandCategoryInfo(id: number) {
     this.brandService.getById(id).subscribe(
       response => {
         this.brand = response;
       }
     )
   }
+
 
 
   getBrands() {
@@ -183,12 +134,22 @@ export class AdupdateComponent implements OnInit {
     }
   }
 
+  getBrandsOfCategory(categoryId: number) {
+    this.brandCatService.getAll({ categoryId, brandId: 0 }).subscribe(response => {
+      this.brandsOfCategory = response;
+    }
+    );
+  }
 
   selectChanged($event) {
     const categoryId = $event.value;
     if (categoryId > 0) {
-      this.getBrandsFromCategory(categoryId);
+      this.getBrandsOfCategory(categoryId);
     }
+  }
+
+  getBrandNameById(brandId: number) {
+    return this.brands.find(x => x.brandId === brandId).title;
   }
 
   toFormData() {
@@ -196,11 +157,14 @@ export class AdupdateComponent implements OnInit {
     this.formData.append('description', this.advertForm.value.description);
     this.formData.append('price', this.advertForm.value.price);
     this.formData.append('brandCategoryId', this.advertForm.value.brandCategoryId);
+    this.formData.append('userId', `${this.advertFromDb.userId}`);
+    this.formData.append('annoucementId', `${this.advertFromDb.id}`);
   }
 
   submit() {
     this.toFormData();
-    this.advertService.createAd(this.formData).subscribe(response => {
+    console.log(this.formData);
+    this.advertService.updateAd(this.formData).subscribe(response => {
       console.log(response);
       this.router.navigateByUrl('/ads');
     }, error => {

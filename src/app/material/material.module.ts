@@ -21,6 +21,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatGridListModule } from '@angular/material/grid-list';
 import {MatCardModule } from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 
@@ -48,8 +49,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
      MatDialogModule,
      MatGridListModule,
      MatCardModule,
-     MatExpansionModule
- 
+     MatExpansionModule,
+     MatChipsModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -72,8 +73,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatDialogModule,
     MatGridListModule,
     MatCardModule,
-    MatExpansionModule
-
+    MatExpansionModule,
+    MatChipsModule
   ]
 })
 export class MaterialModule { }

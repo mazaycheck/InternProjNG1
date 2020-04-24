@@ -21,12 +21,6 @@ export class AdvertService {
   }
   getAds(advertOptions: AdvertQueryOptions): Observable<PageObject> {
 
-    // const  paramString: string = Object.keys(advertOptions)
-    //       .filter(key => advertOptions[key])
-    //       .map(key => key + '=' + encodeURIComponent(advertOptions[key]))
-    //       .join('&');
-    // console.log(paramString);
-
     let httpparam = new HttpParams();
     const keys = Object.keys(advertOptions)
                        .filter(key => advertOptions[key] && advertOptions.hasOwnProperty(key))
@@ -43,11 +37,10 @@ export class AdvertService {
   deleteAd(id: number) {
     return this.http.delete(this.baseUrl + `${id}`);
   }
-  updateAd(model: Advert): Observable<any> {
-    return this.http.patch(this.baseUrl, model);
+  updateAd(model: FormData): Observable<any> {
+    return this.http.post(this.baseUrl + 'update/', model);
   }
   createAd(model: FormData): Observable<any> {
-    console.log('creating');
-    return this.http.post(this.baseUrl, model);
+    return this.http.post(this.baseUrl + 'new/', model);
   }
 }

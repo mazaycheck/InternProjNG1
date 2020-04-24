@@ -1,24 +1,3 @@
-<!-- <form [formGroup]="updateForm" (ngSubmit)="updateAd()">
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" name="" id="title" name="title" class="form-control" placeholder="" aria-describedby="helpId" formControlName="title">
-    <small id="helpId" class="text-muted">Help text</small>
-  </div> 
-  <div class="form-group">
-    <label for="title">Price</label>
-    <input type="number" name="" id="price" name="price" class="form-control" placeholder="" aria-describedby="helpId" formControlName="price">
-    <small id="helpId" class="text-muted">Help text</small>
-  </div> 
-  <div class="form-group">
-    <label for="title">Description</label>
-    <textarea class="form-control" formControlName="description" rows=3></textarea>
-    <small id="helpId" class="text-muted">Help text</small>
-  </div> 
-  <input type="submit"  class="btn btn-success">
- 
-</form> -->
-
-
 
 <br>
 <mat-card class="example-card" class="">
@@ -51,14 +30,14 @@
   </mat-form-field>
     
 
-  <mat-form-field *ngIf="brands.length" appearance="outline" class="w-50">
-  <mat-label for="title">Brand</mat-label>
-    <mat-select class="custom select bg-light form-control"  formControlName="brandCategoryId">      
-        <mat-option *ngFor="let brand of brands" [value]="brand.brandCategoryId">
-          {{ brand.title }}
-        </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <mat-form-field *ngIf="brandsOfCategory.length && brands.length" appearance="outline" class="w-50">
+    <mat-label for="title">Brand</mat-label>
+      <mat-select class="custom select bg-light form-control"  formControlName="brandCategoryId">      
+          <mat-option *ngFor="let brand of brandsOfCategory" [value]="brand.brandCategoryId">
+            {{getBrandNameById(brand.brandId)}}
+          </mat-option>
+      </mat-select>
+    </mat-form-field>
 </div>
 
   
@@ -78,15 +57,21 @@
       <button type="button" mat-raised-button (click)="fileInput.click()" class="mb-4">Upload Images</button>        
       <input hidden #fileInput type="file" multiple class="custom-file-input" value="Choose am image" id="inputFile1" (change)="onFileAttach($event)" formControlName="photo">
 
-
+<ng-container *ngIf="advertFromDb">
   <div class="mb-3">
-    <!-- <div *ngFor="let url of imgUrls" class="img-preview-container mr-1">
-      <img [src]="url" class="img-preview">
-    </div>    -->
-    <div *ngFor="let url of imgUrls" class="img-preview-container mr-1">
-      <img [src]="baseUrl + 'images/' + advertFromDb.id + '/' +  url" class="img-preview">
-    </div>  
+    
+    <ng-container *ngIf="pictures.length && imgUrls.length">
+      <div *ngFor="let url of imgUrls" class="img-preview-container mr-1">
+        <img [src]="url" class="img-preview">
+      </div>   
+    </ng-container>
+    <ng-container *ngIf="!(pictures.length && imgUrls.length)">
+      <div *ngFor="let url of imgUrls" class="img-preview-container mr-1">
+        <img [src]="baseUrl + 'images/' + advertFromDb.id + '/' +  url" class="img-preview">            
+      </div>  
+    </ng-container>
   </div>
+</ng-container>
 
   <button mat-raised-button color="primary" type="submit" class="mr-3">Update</button>
   <a routerLink="/ads" mat-raised-button color="basic" type="submit">Cancel</a>

@@ -80,7 +80,7 @@ export class AdlistComponent implements OnInit, OnChanges {
 
   subscribeToSearchField() {
     this.filter.valueChanges.pipe(debounceTime(500), distinctUntilChanged())
-    .subscribe(x => {this.queryOptions.query = x; this.refresh(); } );
+      .subscribe(x => {this.queryOptions.query = x; this.refresh(); } );
   }
 
   ngOnInit() {
