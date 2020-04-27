@@ -1,0 +1,15 @@
+<mat-toolbar color="primary" class="mt-3">Messages</mat-toolbar>
+
+
+<!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+  <mat-button-toggle value="bold">Unread</mat-button-toggle>
+  <mat-button-toggle value="italic">Inbox</mat-button-toggle>
+  <mat-button-toggle value="underline">Outbox</mat-button-toggle>
+</mat-button-toggle-group> -->
+
+<mat-tab-group>
+  <mat-tab label="First"><app-messagesTable [dataSet]="getUnreadMessages()" [dataColumns]="displayedColumnsInbox"></app-messagesTable></mat-tab>
+  <mat-tab label="Second"><app-messagesTable [dataSet]="getInboxMessages()" [dataColumns]="displayedColumnsInbox"></app-messagesTable></mat-tab>
+  <mat-tab label="Third"><app-messagesTable [dataSet]="getOutboxMessages()" [dataColumns]="displayedColumnsOutbox"></app-messagesTable></mat-tab>
+</mat-tab-group>
+

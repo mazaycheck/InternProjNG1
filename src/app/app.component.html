@@ -3,11 +3,14 @@
     <app-nav>
     </app-nav>
     
-    <div class="row m-0">
+    <div class="row m-0 position-relative">
      
-        <div class="mx-auto col-md-8">
+        <div class="mx-auto col-md-8 position-relative">
+            <div id="loadingIndicator" class="position-absolute" *ngIf="loadingStatus">
+                <mat-spinner></mat-spinner>
+            </div>
             <router-outlet class="p-0 m-0"></router-outlet>
-        </div>
-      
+        </div>          
     </div>
+ 
 </div>

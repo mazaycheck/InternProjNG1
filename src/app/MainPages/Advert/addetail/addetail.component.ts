@@ -16,21 +16,15 @@ export class AddetailComponent implements OnInit {
 
   public advert: Advert;
   public user: UserForDetail;
-  public condition = false;
   baseUrlForImages = 'http://localhost:5000/images/';
   selectedImage: string;
   constructor(private service: AdvertService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.service.getAd(id).subscribe(response => {
-      this.advert = response;
-
-      this.condition =  true;
-      if (this.advert.photoUrls.length > 0) {
-        this.selectedImage = this.advert.photoUrls[0];
-      }
-    });
+    this.advert = this.route.snapshot.data.advert;
+    if (this.advert.photoUrls.length > 0) {
+      this.selectedImage = this.advert.photoUrls[0];
+    }
   }
   changeSelectedImage(image: string) {
     this.selectedImage = image;

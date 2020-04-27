@@ -1,0 +1,21 @@
+<ng-container *ngIf="dataSet.length">
+  <table mat-table [dataSource]="dataSet" class="mat-elevation-z8 w-100">      
+    <ng-container matColumnDef="dataColumns[0]">
+      <th mat-header-cell *matHeaderCellDef> Message </th>
+      <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="dataColumns[1]">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.senderName}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="dataColumns[2]">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.dateTimeSent | date}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="dataColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: dataColumns;"></tr>
+  </table>
+  </ng-container>

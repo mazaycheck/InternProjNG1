@@ -67,7 +67,7 @@
     </ng-container>
     <ng-container *ngIf="!(pictures.length && imgUrls.length)">
       <div *ngFor="let url of imgUrls" class="img-preview-container mr-1">
-        <img [src]="baseUrl + 'images/' + advertFromDb.id + '/' +  url" class="img-preview">            
+        <img [src]="baseUrl + 'images/' + advertFromDb.id + '/medium/' +  url" class="img-preview">            
       </div>  
     </ng-container>
   </div>

@@ -31,6 +31,8 @@ import { JwtTokenInterceptorService } from './services/auth/jwtTokenInterceptor.
 import { MaterialModule} from './material/material.module';
 import { GenericEntityComponent } from './MainPages/GenericEntity/GenericEntity.component';
 import { UserInfoComponent } from './MainPages/Advert/addetail/userInfo/userInfo.component';
+import { MessagesComponent } from './MainPages/Messages/messages/messages.component';
+import { MessagesTableComponent } from './MainPages/Messages/messagesTable/messagesTable.component';
 
 export function toketGetter(){
    return localStorage.getItem('token');
@@ -54,6 +56,8 @@ export function toketGetter(){
       BrandListComponent,
       GenericEntityComponent,
       UserInfoComponent,
+      MessagesComponent,
+      MessagesTableComponent,
    ],
    imports: [
       CommonModule,

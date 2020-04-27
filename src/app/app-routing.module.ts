@@ -12,6 +12,8 @@ import { CatlistComponent } from './MainPages/Category/catlist/catlist.component
 import { AuthGuard } from './services/guards/auth.guard';
 import { TownListComponent } from './MainPages/Town/townList/townList.component';
 import { BrandListComponent } from './MainPages/Brand/brandList/brandList.component';
+import { AdvertResolver } from './services/resolvers/advertResolver';
+import { MessagesComponent } from './MainPages/Messages/messages/messages.component';
 
 
 
@@ -21,11 +23,12 @@ export const routes: Routes = [
   { path: '' , runGuardsAndResolvers : 'always', canActivate: [AuthGuard], children: [
     { path: 'ads', component: AdlistComponent },
     { path: 'ads/new', component: AdcreateComponent },
-    { path: 'ads/details/:id', component: AddetailComponent },
+    { path: 'ads/details/:id', component: AddetailComponent, resolve : { advert: AdvertResolver}},
     { path: 'ads/update/:id', component: AdupdateComponent },
     { path: 'categories', component: CatlistComponent, },
     { path: 'towns', component: TownListComponent, },
-    { path: 'brands', component: BrandListComponent, }
+    { path: 'brands', component: BrandListComponent, },
+    { path: 'messages', component: MessagesComponent, },
     ]
   },
   { path: 'auth/register', component: RegistrationComponent},

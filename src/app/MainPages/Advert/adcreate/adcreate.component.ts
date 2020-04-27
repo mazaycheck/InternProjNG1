@@ -40,7 +40,6 @@ export class AdcreateComponent implements OnInit {
       price: new FormControl(0),
       brandCategoryId: new FormControl(0),
       photo: new FormControl(),
-
     });
     this.numberOfFiles = 3;
     this.getCats();
@@ -122,10 +121,10 @@ export class AdcreateComponent implements OnInit {
   }
 
   toFormData() {
-    this.formData.append('title', this.advertForm.value.title);
-    this.formData.append('description', this.advertForm.value.description);
-    this.formData.append('price', this.advertForm.value.price);
-    this.formData.append('brandCategoryId', this.advertForm.value.brandCategoryId);
+    this.formData.set('title', this.advertForm.value.title);
+    this.formData.set('description', this.advertForm.value.description);
+    this.formData.set('price', this.advertForm.value.price);
+    this.formData.set('brandCategoryId', this.advertForm.value.brandCategoryId);
   }
 
   submit() {

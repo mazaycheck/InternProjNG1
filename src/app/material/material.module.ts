@@ -22,7 +22,9 @@ import {MatGridListModule } from '@angular/material/grid-list';
 import {MatCardModule } from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 
@@ -51,6 +53,9 @@ import {MatChipsModule} from '@angular/material/chips';
      MatCardModule,
      MatExpansionModule,
      MatChipsModule,
+     MatProgressSpinnerModule,
+     MatButtonToggleModule,
+     MatTabsModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -74,7 +79,10 @@ import {MatChipsModule} from '@angular/material/chips';
     MatGridListModule,
     MatCardModule,
     MatExpansionModule,
-    MatChipsModule
+    MatChipsModule,
+    MatProgressSpinnerModule,
+    MatButtonToggleModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule { }
