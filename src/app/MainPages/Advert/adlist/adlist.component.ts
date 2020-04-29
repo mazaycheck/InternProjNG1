@@ -15,16 +15,6 @@ import { Sort } from '@angular/material/sort';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounce, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-
 @Component({
   selector: 'app-adlist',
   templateUrl: './adlist.component.html',
@@ -38,7 +28,7 @@ export class AdlistComponent implements OnInit, OnChanges {
   presentationMode: string;
   basePhotoUrl = 'http://localhost:5000/images/';
   pageObject: PageObject;
-  displayedColumns: string[] = ['title', 'description', 'price', 'category', 'town', 'date', 'manage'];
+  columns: string[] = ['title', 'description', 'price', 'category', 'town', 'date', 'manage'];
   pageEvent: PageEvent;
   length = 1000;
   pageSize = 5;

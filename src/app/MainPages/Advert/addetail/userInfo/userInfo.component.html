@@ -1,27 +1,50 @@
-<mat-card>  
-  <mat-card-header class="d-flex justify-content-between" *ngIf="user">
-    <mat-card-title class="">
-        {{ user.name }}
-    </mat-card-title>        
-    <mat-chip-list>
-      Phone number :  
-      <mat-chip color="primary" selected>
-        {{ user.phoneNumber }}            
-      </mat-chip>              
-      
-    </mat-chip-list>
-  </mat-card-header>
+<mat-card> 
+  <mat-toolbar color="basic">
+    User Info
+  </mat-toolbar> 
+  <br>
+  <mat-list role="list" *ngIf="user">
+
+    <ng-content select="[header]"></ng-content>
+
+
+    <mat-list-item role="listitem" class="user-description-mat-list-item">
+      <span>User Name</span>
+      <span><b>{{user.name}}</b></span>
+    </mat-list-item>
+    <mat-list-item role="listitem" class="user-description-mat-list-item">
+      <span>Phone Number</span>
+      <span><b>{{user.phoneNumber}}</b></span>
+    </mat-list-item>
+    <mat-list-item role="listitem" class="user-description-mat-list-item">
+      <span>Registered Since</span>
+      <span><b>{{user.registrationDate | date}}</b></span>
+    </mat-list-item>
+
+    <ng-content select="[footer]"></ng-content>
+
+<!-- <ng-container *ngIf="detailedMode">
+  <mat-list-item role="listitem" class="user-description-mat-list-item">
+    <span>Lives in</span>
+    <span><b>{{user.townName}}</b></span>
+  </mat-list-item>
+  <mat-list-item role="listitem" class="user-description-mat-list-item">
+    <span>Rating</span>
+    <span><b>{{user.rating}}</b></span>
+  </mat-list-item>
+
+</ng-container> -->
+
+  </mat-list>
+<mat-divider></mat-divider>
+<br>
+<ng-container *ngIf="user">
+  <button mat-raised-button color="primary" (click)="onMessageClick()" class="d-inline-block align-center ml-3"> <mat-icon>send </mat-icon> Message</button>
+  <button mat-raised-button color="warn" [routerLink]="['/profile', userId]" class="d-inline-block align-center ml-3"> <mat-icon>web </mat-icon> Profile</button>
+</ng-container>
 
 </mat-card>
 
-  <mat-card class="py-2 my-3" style="width: 100%;">
-    <mat-form-field appearance="" class="mt-2 d-inline-block align-center" style="width: 100%!important;">
-      <textarea matInput class="title-cell" rows="2" [(ngModel)]="newMessage" placeholder="message..."></textarea>
-    </mat-form-field>
-    <div *ngIf="newMessage">
-    
-    <button mat-raised-button color="primary"  (click)="sendMessage()" class="d-inline-block align-center"><mat-icon>add</mat-icon> </button>
-  
-    <button mat-raised-button color="accent" *ngIf="newMessage.length" (click)="cancel()" class="d-inline-block align-center ml-3"> <mat-icon>cancel</mat-icon> </button>
-  </div>
-  </mat-card>
+
+
+

@@ -6,5 +6,5 @@ import { Injectable } from '@angular/core';
 export class GlobalsService {
 constructor() { }
 public baseUrl = 'http://localhost:5000/';
-public displayAdvertStyle = 'list';
+public displayAdvertStyle = 'table';
 }

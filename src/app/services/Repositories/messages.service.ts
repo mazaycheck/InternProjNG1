@@ -44,7 +44,7 @@ export class MessagesService {
     return this.http.put(this.baseUrl + id, null);
   }
 
-  getMessageThread(withUserTwoId: number) {
+  getMessageThread(withUserTwoId: number): Observable<any> {
     return this.http.get(this.baseUrl + this.thread + withUserTwoId);
   }
 

@@ -19,18 +19,20 @@ export class AdvertService {
   constructor(private http: HttpClient, private globals: GlobalsService) {
     this.baseUrl = globals.baseUrl + 'api/annoucements/';
   }
-  getAds(advertOptions: AdvertQueryOptions): Observable<PageObject> {
-
+  getParamsFromOptions(advertOptions: AdvertQueryOptions): HttpParams {
     let httpparam = new HttpParams();
     const keys = Object.keys(advertOptions)
-                       .filter(key => advertOptions[key] && advertOptions.hasOwnProperty(key))
-                       .map(key => { httpparam = httpparam.append(key, advertOptions[key]); });
-
-    console.log('keyvalues: ' + keys);
-    console.log('params: ' + httpparam.toString());
-
-    return this.http.get<PageObject>(`${this.baseUrl}search?` + httpparam.toString());
+      .filter(key => advertOptions[key] && advertOptions.hasOwnProperty(key))
+      .map(key => { httpparam = httpparam.append(key, advertOptions[key]); });
+    return httpparam;
   }
+
+  getAds(advertOptions: AdvertQueryOptions): Observable<PageObject> {
+    const queryparams: HttpParams = this.getParamsFromOptions(advertOptions);
+    return this.http.get<PageObject>(`${this.baseUrl}search?` + queryparams.toString());
+  }
+
+
   getAd(id: number) {
     return this.http.get<Advert>(this.baseUrl + `${id}`);
   }

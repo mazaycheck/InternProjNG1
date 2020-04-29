@@ -13,6 +13,7 @@ export class GenericEntityComponent implements OnInit {
 
 
   @Input() service: any;
+  @Input() title: string;
   entityList = [];
   temproraryEntity: { title: '', edit: boolean};
   addMode = false;

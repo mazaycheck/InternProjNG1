@@ -33,6 +33,13 @@ import { GenericEntityComponent } from './MainPages/GenericEntity/GenericEntity.
 import { UserInfoComponent } from './MainPages/Advert/addetail/userInfo/userInfo.component';
 import { MessagesComponent } from './MainPages/Messages/messages/messages.component';
 import { MessagesTableComponent } from './MainPages/Messages/messagesTable/messagesTable.component';
+import { MessageModalComponent } from './MainPages/Messages/messageModal/messageModal.component';
+import { UserprofileComponent } from './MainPages/Profile/userprofile/userprofile.component';
+import { AdtableComponent } from './MainPages/Advert/adtable/adtable.component';
+import { AdtablebodyComponent } from './MainPages/Advert/adtable/adtablebody/adtablebody.component';
+import { AdtilesComponent } from './MainPages/Advert/adtable/adtiles/adtiles.component';
+import {NgxAutoScrollModule} from "ngx-auto-scroll";
+import { SidenavComponent } from './MainPages/sidenav/sidenav.component';
 
 export function toketGetter(){
    return localStorage.getItem('token');
@@ -58,6 +65,12 @@ export function toketGetter(){
       UserInfoComponent,
       MessagesComponent,
       MessagesTableComponent,
+      MessageModalComponent,
+      UserprofileComponent,
+      AdtableComponent,
+      AdtablebodyComponent,
+      AdtilesComponent,
+      SidenavComponent,
    ],
    imports: [
       CommonModule,
@@ -74,9 +87,8 @@ export function toketGetter(){
          preventDuplicates: true}),
       FontAwesomeModule,
       MatSliderModule,
-      MaterialModule
- 
-
+      MaterialModule,
+      NgxAutoScrollModule,
    ],
    providers: [
       AdvertService,

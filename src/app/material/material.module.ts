@@ -25,7 +25,8 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatTabsModule} from '@angular/material/tabs';
-
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -56,6 +57,8 @@ import {MatTabsModule} from '@angular/material/tabs';
      MatProgressSpinnerModule,
      MatButtonToggleModule,
      MatTabsModule,
+     ScrollingModule,
+     MatSidenavModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -82,7 +85,10 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatChipsModule,
     MatProgressSpinnerModule,
     MatButtonToggleModule,
-    MatTabsModule
+    MatTabsModule,
+    ScrollingModule,
+    MatSidenavModule
+
   ]
 })
 export class MaterialModule { }

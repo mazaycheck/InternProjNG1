@@ -3,5 +3,7 @@ export interface UserForDetail {
     name: string;
     phoneNumber: string;
     townId: string;
+    townName: string;
+    rating: number;
     registrationDate: Date;
 }

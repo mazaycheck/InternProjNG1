@@ -14,6 +14,7 @@ import { TownListComponent } from './MainPages/Town/townList/townList.component'
 import { BrandListComponent } from './MainPages/Brand/brandList/brandList.component';
 import { AdvertResolver } from './services/resolvers/advertResolver';
 import { MessagesComponent } from './MainPages/Messages/messages/messages.component';
+import { UserprofileComponent } from './MainPages/Profile/userprofile/userprofile.component';
 
 
 
@@ -29,6 +30,7 @@ export const routes: Routes = [
     { path: 'towns', component: TownListComponent, },
     { path: 'brands', component: BrandListComponent, },
     { path: 'messages', component: MessagesComponent, },
+    { path: 'profile/:id', component: UserprofileComponent, },
     ]
   },
   { path: 'auth/register', component: RegistrationComponent},

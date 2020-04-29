@@ -5,5 +5,6 @@ export class AdvertQueryOptions {
     pageSize: number;
     category: string = '';
     query: string = '';
+    userId: number;
 }
 

@@ -14,6 +14,7 @@ import { RegistrationComponent } from '../registration/registration.component';
   // encapsulation : ViewEncapsulation.None,
 })
 export class NavComponent implements OnInit {
+  
   hide = true;
   loginData: any = {};
   name: string;
@@ -51,7 +52,7 @@ export class NavComponent implements OnInit {
      return  this.authService.isLoggedIn();
   }
 
-  onRegister(){
+  onRegister() {
     const config = new MatDialogConfig();
     config.width = '30%';
     this.dialog.open(RegistrationComponent, config);
