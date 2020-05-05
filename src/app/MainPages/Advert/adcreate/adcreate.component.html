@@ -19,9 +19,9 @@
   <div class="d-flex justify-content-between">
   <mat-form-field appearance="outline" class="w-50">
     <mat-label>Category</mat-label>
-    <mat-select required (selectionChange)="selectChanged($event)">  
-      <ng-container *ngIf="categories.length">
-        <mat-option *ngFor="let cat of categories" [value]="cat.categoryId">
+    <mat-select required (selectionChange)="selectedCategoryChanged($event)">  
+      <ng-container *ngIf="allCategoriesFromDb.length">
+        <mat-option *ngFor="let cat of allCategoriesFromDb" [value]="cat.categoryId">
           {{ cat.title }}
         </mat-option>
       </ng-container>
@@ -29,11 +29,11 @@
   </mat-form-field>
     
 
-  <mat-form-field *ngIf="brandsOfCategory.length" appearance="outline" class="w-50">
+  <mat-form-field *ngIf="selectedCategory" appearance="outline" class="w-50">
   <mat-label for="title">Brand</mat-label>
-    <mat-select class="custom select bg-light form-control"  formControlName="brandCategoryId">      
-        <mat-option *ngFor="let brand of brandsOfCategory" [value]="brand.brandCategoryId">
-          {{getBrandNameById(brand.brandId)}}
+    <mat-select class="custom select bg-light form-control"  formControlName="brand" required (selectionChange)="selectedBrandChanged($event)">      
+        <mat-option *ngFor="let brand of selectedCategory.brands" [value]="brand">
+          {{brand}}
         </mat-option>
     </mat-select>
   </mat-form-field>
@@ -58,7 +58,7 @@
 
 
   <div class="mb-3">
-    <div *ngFor="let url of imgUrls" class="img-preview-container mr-1">
+    <div *ngFor="let url of pictureURLs" class="img-preview-container mr-1">
       <img [src]="url" class="img-preview">
     </div>   
   </div>

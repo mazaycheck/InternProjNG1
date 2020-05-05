@@ -19,118 +19,111 @@ import { BrandCategory } from 'src/app/Models/BrandCategory';
 })
 export class AdcreateComponent implements OnInit {
   advertForm: FormGroup;
-  categories: Category[] = [];
-  towns: Town[] = [];
-  brands: Brand[] = [];
+  allCategoriesFromDb: Category[] = [];
   selectedCategory: Category;
-  numberOfFiles: number;
-  imgUrls = new Array<string>(this.numberOfFiles);
-  pictures: string[] = [];
+  selectedBrand: string;
+  numberOfFiles = 6;
+  pictureURLs = new Array<string>(this.numberOfFiles);
+  uploadedPicturesBinaryData: string[] = [];
   formData: FormData;
-  brandsOfCategory: BrandCategory[] = [];
+  brandCategoryIdForCreate: number;
 
-  constructor(private advertService: AdvertService, private router: Router, private catservice: CatService,
-              private toast: ToastrService, private townservice: TownService, private brandService: BrandService,
-              private brandCatService: BrandCategoryService) { }
+  constructor(private advertService: AdvertService, private router: Router, private categoriesService: CatService,
+    private toast: ToastrService, private brandService: BrandService,
+    private brandCatService: BrandCategoryService) { }
 
   ngOnInit() {
+    this.initForm();
+    this.getCategories();
+    this.initPlaceHolderImages();
+    this.formData = new FormData();
+  }
+
+  private initPlaceHolderImages() {
+    for (let i = 0; i < this.numberOfFiles; i++) {
+      this.pictureURLs[i] = '/assets/images/random.jpg';
+    }
+  }
+
+  private initForm() {
     this.advertForm = new FormGroup({
       title: new FormControl(''),
       description: new FormControl(''),
       price: new FormControl(0),
-      brandCategoryId: new FormControl(0),
+      brand: new FormControl(0),
       photo: new FormControl(),
     });
-    this.numberOfFiles = 3;
-    this.getCats();
-    this.getTowns();
-    this.getBrands();
-    for (let i = 0; i < this.numberOfFiles; i++) {
-      this.imgUrls[i] = '/assets/images/random.jpg';
-    }
-    this.formData = new FormData();
   }
 
-  getCats() {
-    this.catservice.getAll().subscribe(
+  getCategories() {
+    this.categoriesService.getAll().subscribe(
       response => {
-        this.categories = response;
+        this.allCategoriesFromDb = response;
       }, error => {
         this.toast.error(error);
       }
     );
   }
 
-  getTowns() {
-    this.townservice.getAll().subscribe(
-      response => {
-        this.towns = response;
-      }, error => {
-        this.toast.error(error);
-      }
-    );
+  getBrandCategoryId(categoryTitle: string, brandTitle: string) {
+    var brandCatId;
+    this.brandCatService.getBrandCatId(categoryTitle, brandTitle).subscribe(response => {
+      brandCatId = response[0].brandCategoryId;      
+      this.formData.set('brandCategoryId', brandCatId);
+      this.brandCategoryIdForCreate = brandCatId;
+    });
   }
 
-  getBrands() {
-    this.brandService.getAll().subscribe(
-      response => {
-        this.brands = response;
-      }, error => {
-        this.toast.error(error);
-      }
-    );
-  }
-
-  getBrandsOfCategory(categoryId: number) {
-    this.brandCatService.getAll({categoryId, brandId: 0}).subscribe( response => {
-      this.brandsOfCategory = response;
+  getCategory(categoryId: number) {
+    this.categoriesService.getById(categoryId).subscribe(response => {
+      this.selectedCategory = response;
     }
     );
   }
-
-  getBrandNameById(brandId: number) {
-    return this.brands.find(x => x.brandId === brandId).title;
-  }
-
 
   onFileAttach($event) {
     for (let i = 0; i < $event.target.files.length; i++) {
       const file = $event.target.files[i];
-      this.pictures.push(file);
-      // Asp.net core has to accept [FromForm] MyAnnoucementDto
-      // MyAnnoucementDto has to have List<IFormFile>
+      this.uploadedPicturesBinaryData.push(file);
       this.formData.append('photo', file, file.name);
       const fileReader = new FileReader();
       fileReader.onload = ((event: any) => {
-        this.imgUrls[i] = event.target.result;
-        // Asp.net core has to accept [FromForm] IFormCollection to work for these options:
-        //this.formData.append(`photo[${i}]`, file);
-        // OR
-        //this.formData.append(`photo[]`, file);
+        this.pictureURLs[i] = event.target.result;
       });
       fileReader.readAsDataURL(file);
     }
   }
 
 
-  selectChanged($event) {
+  selectedCategoryChanged($event) {
     const categoryId = $event.value;
     if (categoryId > 0) {
-      this.getBrandsOfCategory(categoryId);
+      this.getCategory(categoryId);
     }
+  }
+
+  selectedBrandChanged($event) {
+    this.selectedBrand = $event.value;
+    const brand = $event.value;
+    this.brandCatService.getBrandCatId(this.selectedCategory.title, this.selectedBrand).subscribe(response => {
+      this.brandCategoryIdForCreate = response[0].brandCategoryId;
+      
+    });
+
+
   }
 
   toFormData() {
     this.formData.set('title', this.advertForm.value.title);
     this.formData.set('description', this.advertForm.value.description);
     this.formData.set('price', this.advertForm.value.price);
-    this.formData.set('brandCategoryId', this.advertForm.value.brandCategoryId);
+    this.formData.set('brandCategoryId', `${this.brandCategoryIdForCreate}`);
   }
 
   submit() {
     this.toFormData();
     this.advertService.createAd(this.formData).subscribe(response => {
-      console.log(response);
+      
       this.router.navigateByUrl('/ads');
     }, error => {
       this.toast.error(error);

@@ -17,19 +17,19 @@ export class AdtablebodyComponent implements OnInit {
     breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
         ['title', 'price', 'date'] :
-        ['title', 'price', 'category','date', ];
+        ['title', 'price', 'category', 'date', ];
     });
 
     breakpointObserver.observe(['(max-width: 1300px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
-      ['title', 'description', 'price', 'category',  'date', 'manage'] :
-        ['title', 'description', 'price', 'category', 'town', 'date', 'manage'];
+      ['title', 'price', 'category',  'date', 'manage'] :
+        ['title',  'price', 'category', 'town', 'date', 'manage'];
     });
 
     breakpointObserver.observe(['(max-width: 1156px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
-      ['title', 'description', 'price', 'category',  'date',] :
-        ['title', 'description', 'price', 'category', 'town', 'date'];
+      ['title',  'price', 'category',  'date',] :
+        ['title',  'price', 'category', 'town', 'date'];
     });
 
     breakpointObserver.observe(['(max-width: 900px)']).subscribe(result => {

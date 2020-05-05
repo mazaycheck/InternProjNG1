@@ -1,8 +1,10 @@
 .img-preview-container{
-    display : inline-block;
+    display : block;
     width:200px;
     height:200px;
     overflow:hidden;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .img-preview{
@@ -21,4 +23,24 @@
 mat-card-title{
     font-family: 'Baloo Thambi 2'!important;
     font-size: 25px!important;
+    
+}
+
+
+.ads-card-container{
+    align-self: stretch;
+    max-width: 50%;
+    cursor: pointer;
+    flex-basis: 240px;
+}
+
+.tiles-container mat-card{
+    height: 100%!important;
+    cursor: pointer;
+}
+
+
+.tiles-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));   
 }

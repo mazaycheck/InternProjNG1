@@ -16,19 +16,24 @@ export class BrandCategoryService {
   }
 
 
-  getAll(filter: {categoryId: number, brandId: number } = null): Observable<any> {
-    if (filter) {
-      const params = { categoryId : filter.categoryId.toString(), brandId: filter.brandId.toString()};
-      return this.http.get(this.baseUrl , { params });
-    } else {
-     return this.http.get(this.baseUrl);
-    }
+  // getAll(filter: { categoryId: number, brandId: number } = null): Observable<any> {
+  //   if (filter) {
+  //     const params = { categoryId: filter.categoryId.toString(), brandId: filter.brandId.toString() };
+  //     return this.http.get(this.baseUrl, { params });
+  //   } else {
+  //     return this.http.get(this.baseUrl);
+  //   }
+  // }
+
+  getBrandCatId(category: string, brand: string): Observable<any> {
+    const httpParam = new HttpParams({ fromObject: { category, brand } });    
+    return this.http.get(`${this.baseUrl}?${httpParam}`);
   }
 
   getById(id: number): Observable<BrandCategory> {
     return this.http.get<BrandCategory>(this.baseUrl + '/' + `${id}`);
-   }
-   
+  }
+
   create(brandCategory: BrandCategory): Observable<any> {
     return this.http.post(this.baseUrl, brandCategory);
   }

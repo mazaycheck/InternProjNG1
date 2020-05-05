@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { GlobalsService } from '../global/globals.service';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/Models/Category';
@@ -15,12 +15,20 @@ constructor(private http: HttpClient, private config: GlobalsService) {
   this.baseUrl = this.config.baseUrl + 'api/categories';
 }
 
-
-
 getAll(): Observable<any> {
-  return this.http.get(this.baseUrl);
+  return this.http.get(`${this.baseUrl}`);
 }
-getById(){ }
+
+getAllWithOptions(options: any): Observable<any> {
+  const params = new HttpParams({fromObject: options});
+  return this.http.get(`${this.baseUrl}?${params}`);
+}
+
+
+getById(categoryId): Observable<any> {
+  return this.http.get(`${this.baseUrl}/${categoryId}`);
+}
+
 create(cat: Category): Observable<any> {
   return this.http.post(this.baseUrl, cat);
 }

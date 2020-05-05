@@ -16,20 +16,18 @@ import { AuthService } from './services/auth/auth.service';
 import { RegistrationComponent } from './MainPages/registration/registration.component';
 import { GlobalsService } from './services/global/globals.service';
 import { CatService } from './services/Repositories/cat.service';
-import { CatlistComponent } from './MainPages/Category/catlist/catlist.component';
+// import { CatlistComponent } from './Admin/catlist/catlist.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { ErrorInterceptorService } from './services/err/errorInterceptor.service';
 import { ToastrModule } from 'ngx-toastr';
-import { ButtonupdateComponent } from './MainPages/Category/catlist/tdupdate/buttonupdate/buttonupdate.component';
-import { TdupdateComponent } from './MainPages/Category/catlist/tdupdate/tdupdate.component';
-import { CatcreateComponent } from './MainPages/Category/catcreate/catcreate.component';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TownListComponent } from './MainPages/Town/townList/townList.component';
-import { BrandListComponent } from './MainPages/Brand/brandList/brandList.component';
+// import { TownListComponent } from './MainPages/Town/townList/townList.component';
+// import { BrandListComponent } from './MainPages/Brand/brandList/brandList.component';
 import { JwtTokenInterceptorService } from './services/auth/jwtTokenInterceptor.service';
 import { MaterialModule} from './material/material.module';
-import { GenericEntityComponent } from './MainPages/GenericEntity/GenericEntity.component';
+// import { GenericEntityComponent } from './MainPages/GenericEntity/GenericEntity.component';
 import { UserInfoComponent } from './MainPages/Advert/addetail/userInfo/userInfo.component';
 import { MessagesComponent } from './MainPages/Messages/messages/messages.component';
 import { MessagesTableComponent } from './MainPages/Messages/messagesTable/messagesTable.component';
@@ -38,7 +36,6 @@ import { UserprofileComponent } from './MainPages/Profile/userprofile/userprofil
 import { AdtableComponent } from './MainPages/Advert/adtable/adtable.component';
 import { AdtablebodyComponent } from './MainPages/Advert/adtable/adtablebody/adtablebody.component';
 import { AdtilesComponent } from './MainPages/Advert/adtable/adtiles/adtiles.component';
-import {NgxAutoScrollModule} from "ngx-auto-scroll";
 import { SidenavComponent } from './MainPages/sidenav/sidenav.component';
 
 export function toketGetter(){
@@ -55,13 +52,10 @@ export function toketGetter(){
       AdcreateComponent,
       AdupdateComponent,
       RegistrationComponent,
-      CatlistComponent,
-      ButtonupdateComponent,
-      TdupdateComponent,
-      CatcreateComponent,
-      TownListComponent,
-      BrandListComponent,
-      GenericEntityComponent,
+      // CatlistComponent,
+      // TownListComponent,
+      // BrandListComponent,
+      // GenericEntityComponent,
       UserInfoComponent,
       MessagesComponent,
       MessagesTableComponent,
@@ -86,9 +80,7 @@ export function toketGetter(){
          positionClass: 'toast-bottom-right',
          preventDuplicates: true}),
       FontAwesomeModule,
-      MatSliderModule,
       MaterialModule,
-      NgxAutoScrollModule,
    ],
    providers: [
       AdvertService,

@@ -95,3 +95,7 @@ input:-webkit-autofill:focus { -webkit-box-shadow: 0 0 0 1000px white inset !imp
     padding-left: 0%;
     padding-right: 0%;
 }
+
+.userroles-selection .mat-list-item-content.mat-list-item-content-reverse {
+    padding-left: 0!important;
+}

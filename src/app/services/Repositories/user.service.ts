@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserForDetail } from 'src/app/Models/UserForDetail';
 
@@ -14,9 +14,12 @@ export class UserService {
     this.baseUrl = environment.baseUrl + 'api/users/';
   }
 
-  getAll(): Observable <UserForDetail[]> {
-    return this.http.get<UserForDetail[]>(this.baseUrl);
+  getAll(options: any): Observable<any> {
+    console.log(options);
+    const params = new HttpParams({fromObject: options});
+    return this.http.get(`${this.baseUrl}?${params}`);
   }
+  
   getById(id: number): Observable <UserForDetail> {
     return this.http.get<UserForDetail>(this.baseUrl + `${id}`);
    }

@@ -34,8 +34,8 @@ export class AdtableComponent implements OnInit, OnChanges {
   // displayedColumns: string[] = ['title', 'description', 'price', 'category', 'town', 'date', 'manage'];
   pageEvent: PageEvent;
   length = 1000;
-  pageSize = 5;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSize = 10;
+  pageSizeOptions: number[] = [10, 25, 50];
 
   filter: FormControl;
   advertSourse: Observable<any>;
@@ -74,12 +74,12 @@ export class AdtableComponent implements OnInit, OnChanges {
 
   subscribeToSearchField() {
     this.filter.valueChanges.pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe(x => {this.queryOptions.query = x; this.refresh(); } );
+      .subscribe(x => { this.queryOptions.query = x; this.refresh(); });
   }
 
   ngOnInit() {
     this.queryOptions.userId = this.userId;
-    this.filter =  new FormControl('');
+    this.filter = new FormControl('');
     this.subscribeToSearchField();
     this.presentationMode = this.globals.displayAdvertStyle;
     this.refresh();
@@ -134,9 +134,9 @@ export class AdtableComponent implements OnInit, OnChanges {
 
 
   pageClicked($event: PageEvent) {
-    console.log($event);
     this.queryOptions.pageNumber = $event.pageIndex + 1;
     this.queryOptions.pageSize = $event.pageSize;
+    this.globals.pageSize = $event.pageSize;
     this.refresh();
   }
 
@@ -144,7 +144,7 @@ export class AdtableComponent implements OnInit, OnChanges {
     console.log(sort);
     this.queryOptions.orderBy = sort.active;
     this.queryOptions.direction = sort.direction;
-    this.refresh();    
+    this.refresh();
   }
 
 }

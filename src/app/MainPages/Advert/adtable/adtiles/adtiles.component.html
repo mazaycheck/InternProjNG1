@@ -1,11 +1,11 @@
-<div class="d-flex flex-wrap">
-  <div class="d-inline-block p-1 mb-2 flex-grow-1" *ngFor="let advert of data">
-    <mat-card>
+<div class="tiles-container">
+  <div class="d-inline-block p-1 mb-2" *ngFor="let advert of data">
+    <mat-card (click)="onCardClicked(advert.id)">
       <mat-card-header class="card-header-for-tiles">
         <div class="for-tiles-text-center">{{advert.title}}</div>
       </mat-card-header>
       <mat-card-content>
-        <div class="img-preview-container">
+        <div class="img-preview-container mx-auto">
           <img *ngIf="advert.photoUrls.length" [src]="baseUrl + 'images/' + advert.id + '/medium/' +  advert.photoUrls[0]" class="img-preview">            
         </div>  
         <div class="for-tiles-text-center"> {{advert.price | currency}}</div>

@@ -4,10 +4,8 @@
   <mat-list class="d-flex">
     <mat-list-item><a  mat-button color="accent" [routerLink]="['/ads/new']" routerLinkActive="router-link-active" class="p-1 d-inline-block">Create New Advert</a></mat-list-item>
     <mat-list-item><a [routerLink]="['/ads']" routerLinkActive="router-link-active">Advertisements </a></mat-list-item>
-    <mat-list-item><a routerLink="/categories"><span color="accent">Categories</span></a></mat-list-item>
-    <mat-list-item><a routerLink="/towns">Towns</a></mat-list-item>
-    <mat-list-item><a routerLink="/brands">Brands</a></mat-list-item>
     <mat-list-item><a routerLink="/messages">Messages</a></mat-list-item>
+    <mat-list-item><a routerLink="/admin">Admin</a></mat-list-item>
   </mat-list>
 </div>
 
@@ -19,6 +17,8 @@
           <mat-label>Email</mat-label>
           <input required matInput type="text"  name="email" [(ngModel)]="loginData.email" class="mr-3" >
         </mat-form-field>
+
+        
   
 
 

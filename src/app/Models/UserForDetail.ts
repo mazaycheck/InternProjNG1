@@ -1,9 +1,11 @@
 export interface UserForDetail {
     id: number;
-    name: string;
+    userName: string;
     phoneNumber: string;
     townId: string;
     townName: string;
     rating: number;
     registrationDate: Date;
+    roles?: string[];
+    edit?: boolean;
 }

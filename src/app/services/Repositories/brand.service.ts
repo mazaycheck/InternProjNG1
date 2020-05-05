@@ -15,21 +15,23 @@ export class BrandService {
   }
 
 
-  getAll(): Observable<any> {
-    return this.http.get(this.baseUrl);
+  getAll(options: any): Observable<any> {
+    const params = new HttpParams({ fromObject: options });
+    return this.http.get(`${this.baseUrl}?${params}`);
   }
   getAllFromCategory(categoryId: number): Observable<any> {
     let httpparam = new HttpParams();
     httpparam = httpparam.append('categoryId', `${categoryId}`);
-    return this.http.get(this.baseUrl  + '?' + httpparam.toString());
+    return this.http.get(this.baseUrl + '?' + httpparam.toString());
   }
+
 
   getById(id: number): Observable<Brand> {
     return this.http.get<Brand>(this.baseUrl + '/' + `${id}`);
-   }
-   
-  create(brand: Brand): Observable<any> {
-    return this.http.post(this.baseUrl, brand);
+  }
+
+  create(brand: string): Observable<any> {
+    return this.http.post(this.baseUrl, { title: brand });
   }
   delete(brand: Brand): Observable<any> {
     return this.http.delete(this.baseUrl + '/' + brand.brandId);
@@ -38,4 +40,9 @@ export class BrandService {
   update(brand: Brand): Observable<any> {
     return this.http.put(this.baseUrl, brand);
   }
+  updateCategories(brandId: number, title: string, categories: string[]): Observable<any> {
+    const updateObject = { brandId, title, categories };
+    return this.http.post(this.baseUrl + '/updateCategories', updateObject);
+  }
+
 }

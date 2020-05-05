@@ -1,10 +1,6 @@
 export class UserRegisterModel {
-
-
-        public name: string;
+        public userName: string;
         public email: string;
         public phonenumber: string;
         public password: string;
-     
-    
 }

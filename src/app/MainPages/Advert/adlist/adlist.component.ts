@@ -28,11 +28,11 @@ export class AdlistComponent implements OnInit, OnChanges {
   presentationMode: string;
   basePhotoUrl = 'http://localhost:5000/images/';
   pageObject: PageObject;
-  columns: string[] = ['title', 'description', 'price', 'category', 'town', 'date', 'manage'];
+  columns: string[] = ['title', 'price', 'category', 'town', 'date', 'manage'];
   pageEvent: PageEvent;
   length = 1000;
-  pageSize = 5;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSize = 10;
+  pageSizeOptions: number[] = [10, 25, 100];
 
   filter: FormControl;
 
@@ -128,19 +128,18 @@ export class AdlistComponent implements OnInit, OnChanges {
   }
 
 
-  pageClicked($event: PageEvent) {
-    console.log($event);
+  pageClicked($event: PageEvent) {    
     this.queryOptions.pageNumber = $event.pageIndex + 1;
     this.queryOptions.pageSize = $event.pageSize;
+    this.globals.pageSize = $event.pageSize;
     this.refresh();
   }
 
-  sortData(sort: Sort) {
-    console.log(sort);
+  sortData(sort: Sort) {    
     this.queryOptions.orderBy = sort.active;
     this.queryOptions.direction = sort.direction;
     this.refresh();
-    console.log(this.queryOptions);
+    
   }
 
 }

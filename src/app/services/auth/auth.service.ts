@@ -12,7 +12,7 @@ export class AuthService {
   baseUrl: string;
   constructor(private http: HttpClient, private globals: GlobalsService) {
     this.baseUrl = globals.baseUrl + 'api/auth/';
-   }
+  }
 
   login(model): Observable<any> {
     return this.http.post(this.baseUrl + 'login', model);
@@ -61,6 +61,22 @@ export class AuthService {
     if (token) {
       const decoded = jwt_decode(token);
       return decoded.nameid;
+    }
+  }
+  getRoles(): any {
+    const token = this.getToken();
+    if (token) {
+      const decoded = jwt_decode(token);
+      return decoded.role;
+    }
+  }
+
+  hasRequiredRoles(requeredRoles: string[]) {
+    const userRoles = this.getRoles();
+    if (userRoles instanceof Array) {
+      return (userRoles as string[]).some(v => requeredRoles.indexOf(v));
+    } else {
+      return requeredRoles.includes(userRoles as string);
     }
   }
 }

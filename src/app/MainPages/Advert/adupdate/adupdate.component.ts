@@ -21,155 +21,156 @@ import { BrandCategoryService } from 'src/app/services/Repositories/brandCategor
 })
 
 export class AdupdateComponent implements OnInit {
-  baseUrl: string;
-  id: number;
-  advertFromDb: Advert;
-  advertForm: FormGroup;
-  categories: Category[] = [];
-  brands: Brand[] = [];
-  selectedCategory: Category;
-  numberOfFiles: number;
-  imgUrls = new Array<string>(this.numberOfFiles);
-  pictures: string[] = [];
-  formData: FormData;
-  brand: Brand;
-  brandsOfCategory: BrandCategory[] = [];
-  constructor(private advertService: AdvertService, private router: Router, private catservice: CatService,
-    private toast: ToastrService, private townservice: TownService, private brandService: BrandService,
-    private route: ActivatedRoute, private brandCatService: BrandCategoryService) { }
-
-  ngOnInit() {
-    this.baseUrl = environment.baseUrl;
-    this.advertForm = new FormGroup({
-      title: new FormControl(''),
-      description: new FormControl(''),
-      price: new FormControl(0),
-      brandCategoryId: new FormControl(0),
-      categoryId: new FormControl(0),
-      photo: new FormControl()
-    });
-
-    this.id = +this.route.snapshot.paramMap.get('id');
-    this.advertService.getAd(this.id).subscribe(response => {
-      this.advertFromDb = response;
-      this.brandCatService.getById(this.advertFromDb.brandCategoryId).subscribe(response => {
-        this.getBrandsOfCategory(response.categoryId);
-        this.advertForm.patchValue({
-          title: this.advertFromDb.title,
-          description: this.advertFromDb.description,
-          price: this.advertFromDb.price,
-          brandCategoryId: this.advertFromDb.brandCategoryId,
-          categoryId: response.categoryId
-        });
-      });
-      this.imgUrls = this.advertFromDb.photoUrls;
-    });
-
-    this.numberOfFiles = 3;
-    this.getCats();
-    this.getBrands();
-    for (let i = 0; i < this.numberOfFiles; i++) {
-      this.imgUrls[i] = '/assets/images/random.jpg';
-    }
-    this.formData = new FormData();
-  }
-
-  getCats() {
-    this.catservice.getAll().subscribe(
-      response => {
-        this.categories = response;
-      }, error => {
-        this.toast.error(error);
-      }
-    );
+  ngOnInit(): void {
+    
   }
 
 
-  getBrandCategoryInfo(id: number) {
-    this.brandService.getById(id).subscribe(
-      response => {
-        this.brand = response;
-      }
-    )
-  }
+  
+  // baseUrl: string;
+  // id: number;
+  // advertFromDb: Advert;
+  // advertForm: FormGroup;
+  // categories: Category[] = [];
+  // brands: Brand[] = [];
+  // selectedCategory: Category;
+  // numberOfFiles: number;
+  // imgUrls = new Array<string>(this.numberOfFiles);
+  // pictures: string[] = [];
+  // formData: FormData;
+  // brand: Brand;
+  // brandsOfCategory: BrandCategory[] = [];
+  // constructor(private advertService: AdvertService, private router: Router, private catservice: CatService,
+  //   private toast: ToastrService, private townservice: TownService, private brandService: BrandService,
+  //   private route: ActivatedRoute, private brandCatService: BrandCategoryService) { }
+
+  // ngOnInit() {
+  //   this.baseUrl = environment.baseUrl;
+  //   this.advertForm = new FormGroup({
+  //     title: new FormControl(''),
+  //     description: new FormControl(''),
+  //     price: new FormControl(0),
+  //     brandCategoryId: new FormControl(0),
+  //     categoryId: new FormControl(0),
+  //     photo: new FormControl()
+  //   });
+
+  //   this.id = +this.route.snapshot.paramMap.get('id');
+  //   this.advertService.getAd(this.id).subscribe(response => {
+  //     this.advertFromDb = response;
+  //     this.brandCatService.getById(this.advertFromDb.brandCategoryId).subscribe(response => {
+  //       this.getBrandsOfCategory(response.categoryId);
+  //       this.advertForm.patchValue({
+  //         title: this.advertFromDb.title,
+  //         description: this.advertFromDb.description,
+  //         price: this.advertFromDb.price,
+  //         brandCategoryId: this.advertFromDb.brandCategoryId,
+  //         categoryId: response.categoryId
+  //       });
+  //     });
+  //     this.imgUrls = this.advertFromDb.photoUrls;
+  //   });
+
+  //   this.numberOfFiles = 3;
+  //   this.getCats();
+  //   this.getBrands();
+  //   for (let i = 0; i < this.numberOfFiles; i++) {
+  //     this.imgUrls[i] = '/assets/images/random.jpg';
+  //   }
+  //   this.formData = new FormData();
+  // }
+
+  // getCats() {
+  //   this.catservice.getAll().subscribe(
+  //     response => {
+  //       this.categories = response;
+  //     }, error => {
+  //       this.toast.error(error);
+  //     }
+  //   );
+  // }
+
+
+  // getBrandCategoryInfo(id: number) {
+  //   this.brandService.getById(id).subscribe(
+  //     response => {
+  //       this.brand = response;
+  //     }
+  //   )
+  // }
 
 
 
-  getBrands() {
-    this.brandService.getAll().subscribe(
-      response => {
-        this.brands = response;
-      }, error => {
-        this.toast.error(error);
-      }
-    );
-  }
+  // getBrands() {
+  //   this.brandService.getAll().subscribe(
+  //     response => {
+  //       this.brands = response;
+  //     }, error => {
+  //       this.toast.error(error);
+  //     }
+  //   );
+  // }
 
-  getBrandsFromCategory(categoryId: number) {
-    this.brandService.getAllFromCategory(categoryId).subscribe(
-      response => {
-        this.brands = response;
-      }, error => {
-        this.toast.error(error);
-      }
-    );
-  }
+  // getBrandsFromCategory(categoryId: number) {
+  //   this.brandService.getAllFromCategory(categoryId).subscribe(
+  //     response => {
+  //       this.brands = response;
+  //     }, error => {
+  //       this.toast.error(error);
+  //     }
+  //   );
+  // }
 
-  onFileAttach($event) {
-    for (let i = 0; i < $event.target.files.length; i++) {
-      const file = $event.target.files[i];
-      this.pictures.push(file);
-      // Asp.net core has to accept [FromForm] MyAnnoucementDto
-      // MyAnnoucementDto has to have List<IFormFile>
-      this.formData.append('photo', file, file.name);
-      const fileReader = new FileReader();
-      fileReader.onload = ((event: any) => {
-        this.imgUrls[i] = event.target.result;
-        // Asp.net core has to accept [FromForm] IFormCollection to work for these options:
-        //this.formData.append(`photo[${i}]`, file);
-        // OR
-        //this.formData.append(`photo[]`, file);
-      });
-      fileReader.readAsDataURL(file);
-    }
-  }
+  // onFileAttach($event) {
+  //   for (let i = 0; i < $event.target.files.length; i++) {
+  //     const file = $event.target.files[i];
+  //     this.pictures.push(file);
+  //     // Asp.net core has to accept [FromForm] MyAnnoucementDto
+  //     // MyAnnoucementDto has to have List<IFormFile>
+  //     this.formData.append('photo', file, file.name);
+  //     const fileReader = new FileReader();
+  //     fileReader.onload = ((event: any) => {
+  //       this.imgUrls[i] = event.target.result;
+  //       // Asp.net core has to accept [FromForm] IFormCollection to work for these options:
+  //       //this.formData.append(`photo[${i}]`, file);
+  //       // OR
+  //       //this.formData.append(`photo[]`, file);
+  //     });
+  //     fileReader.readAsDataURL(file);
+  //   }
+  // }
 
-  getBrandsOfCategory(categoryId: number) {
-    this.brandCatService.getAll({ categoryId, brandId: 0 }).subscribe(response => {
-      this.brandsOfCategory = response;
-    }
-    );
-  }
 
-  selectChanged($event) {
-    const categoryId = $event.value;
-    if (categoryId > 0) {
-      this.getBrandsOfCategory(categoryId);
-    }
-  }
 
-  getBrandNameById(brandId: number) {
-    return this.brands.find(x => x.brandId === brandId).title;
-  }
+  // selectChanged($event) {
+  //   const categoryId = $event.value;
+  //   if (categoryId > 0) {
+  //     this.getBrandsOfCategory(categoryId);
+  //   }
+  // }
 
-  toFormData() {
-    this.formData.append('title', this.advertForm.value.title);
-    this.formData.append('description', this.advertForm.value.description);
-    this.formData.append('price', this.advertForm.value.price);
-    this.formData.append('brandCategoryId', this.advertForm.value.brandCategoryId);
-    this.formData.append('userId', `${this.advertFromDb.userId}`);
-    this.formData.append('annoucementId', `${this.advertFromDb.id}`);
-  }
+  // getBrandNameById(brandId: number) {
+  //   return this.brands.find(x => x.brandId === brandId).title;
+  // }
 
-  submit() {
-    this.toFormData();
-    console.log(this.formData);
-    this.advertService.updateAd(this.formData).subscribe(response => {
-      console.log(response);
-      this.router.navigateByUrl('/ads');
-    }, error => {
-      this.toast.error(error);
-    }
-    );
-  }
+  // toFormData() {
+  //   this.formData.append('title', this.advertForm.value.title);
+  //   this.formData.append('description', this.advertForm.value.description);
+  //   this.formData.append('price', this.advertForm.value.price);
+  //   this.formData.append('brandCategoryId', this.advertForm.value.brandCategoryId);
+  //   this.formData.append('userId', `${this.advertFromDb.userId}`);
+  //   this.formData.append('annoucementId', `${this.advertFromDb.id}`);
+  // }
+
+  // submit() {
+  //   this.toFormData();
+  //   console.log(this.formData);
+  //   this.advertService.updateAd(this.formData).subscribe(response => {
+  //     console.log(response);
+  //     this.router.navigateByUrl('/ads');
+  //   }, error => {
+  //     this.toast.error(error);
+  //   }
+  //   );
+  // }
 }
