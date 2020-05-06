@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { UserRolesUpdateComponent } from './user-roles-update/user-roles-update.component';
+import { CheckboxUpdateModalComponent } from '../checkbox-update-modal/checkbox-update-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -18,6 +19,7 @@ export class UsersComponent implements OnInit {
 
   allUsersFromDb: UserForDetail[] = [];
   allRolesFromDb: string[] = [];
+  allUserRoles: string[];
   displayedColumns = ['username', 'email', 'registrationdate', 'roles', 'action'];
   temporaryRoles: string[] = [];
 
@@ -33,7 +35,7 @@ export class UsersComponent implements OnInit {
   filter = new FormControl('');
 
   constructor(private toastr: ToastrService, private userService: UserService, private adminService: AdminService,
-              private dialog: MatDialog) { }
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getAllUsers();
@@ -66,25 +68,25 @@ export class UsersComponent implements OnInit {
 
   }
 
-  editSave(user) {
-    this.adminService.updateRoles(user.email, this.temporaryRoles).subscribe(response => {
-      this.toastr.success(`${user.userName} updated`);
-      user.roles = [...this.temporaryRoles];
-      user.edit = false;
-    },
-      error => {
-        this.toastr.error(error);
-        user.edit = false;
-      });
+  // editSave(user) {
+  //   this.adminService.updateRoles(user.email, this.temporaryRoles).subscribe(response => {
+  //     this.toastr.success(`${user.userName} updated`);
+  //     user.roles = [...this.temporaryRoles];
+  //     user.edit = false;
+  //   },
+  //     error => {
+  //       this.toastr.error(error);
+  //       user.edit = false;
+  //     });
 
-  }
+  // }
 
   editCancel(entity) {
     this.allUsersEditOff();
   }
 
   update(user) {
-    this.onUpdateClicked({user, roles: this.allRolesFromDb });
+    this.onUpdateClicked(user);
     // this.allUsersEditOff();
     // user.edit = true;
     // this.temporaryRoles = [...user.roles];
@@ -98,13 +100,23 @@ export class UsersComponent implements OnInit {
 
   }
 
-  onUpdateClicked(data: any) {
+  onUpdateClicked(user: UserForDetail) {
+    const dataToInject = {
+      identity: user.email,
+      title: user.userName,
+      service: this.adminService,
+      entity: user,
+      allSelectOptions: this.allRolesFromDb,
+      currentSelection: user.roles
+    };
     const config = new MatDialogConfig();
     config.minWidth = '380px';
     config.width = '600px';
-    config.data = data;
-    console.log(config);
-    this.dialog.open(UserRolesUpdateComponent, config);
+    config.data = dataToInject;
+    this.dialog.open(CheckboxUpdateModalComponent, config);
+    this.dialog.afterAllClosed.subscribe(x => {
+      this.getAllUsers();
+    });
   }
 
 

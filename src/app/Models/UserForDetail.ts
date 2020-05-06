@@ -8,4 +8,5 @@ export interface UserForDetail {
     registrationDate: Date;
     roles?: string[];
     edit?: boolean;
+    email?: string;
 }

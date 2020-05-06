@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8 mt-3">
+<div class="mat-elevation-z0 mt-3">
   <div>
     <mat-card class="mat-elevation-z0 d-block w-100">
       <div class="d-flex align-items-center">
@@ -21,14 +21,15 @@
           </mat-form-field>
       </div>
       <div class="d-block ml-auto mr-3">
-        <button class="mr-2" color="primary" mat-raised-button (click)="switchPresentationMode('table')"><mat-icon>table_chart</mat-icon></button>
-        <button color="primary" mat-raised-button (click)="switchPresentationMode('tiles')"><mat-icon>view_comfy</mat-icon></button>
+        <button class="mr-2" color="primary" mat-raised-button (click)="switchPresentationMode('table')"><mat-icon [ngClass]="presentationMode == 'table' ? 'color-red' : 'color-white'">table_chart</mat-icon></button>
+        <button color="primary" mat-raised-button (click)="switchPresentationMode('tiles')"><mat-icon [ngClass]="presentationMode == 'tiles' ? 'color-red' : 'color-white'">view_comfy</mat-icon></button>
       </div>
     </div>
     </mat-card>
 
   </div>
   <mat-divider></mat-divider>
+  <br>
 
   <app-adtablebody [advertisements]="advertisements" [displayedColumns]="displayedColumns" (delete)="removeAd($event)" (sort)="sortData($event)" *ngIf="presentationMode == 'table'">
 
@@ -37,7 +38,7 @@
 <app-adtiles [data]="advertisements" *ngIf="presentationMode == 'tiles'">
 
 </app-adtiles>
-
+<br>
 
 
 

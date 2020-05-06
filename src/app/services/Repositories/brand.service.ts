@@ -37,12 +37,11 @@ export class BrandService {
     return this.http.delete(this.baseUrl + '/' + brand.brandId);
   }
 
-  update(brand: Brand): Observable<any> {
-    return this.http.put(this.baseUrl, brand);
-  }
-  updateCategories(brandId: number, title: string, categories: string[]): Observable<any> {
-    const updateObject = { brandId, title, categories };
-    return this.http.post(this.baseUrl + '/updateCategories', updateObject);
+  // update(brand: Brand): Observable<any> {
+  //   return this.http.put(this.baseUrl, brand);
+  // }
+  update(brandId: number, title: string, categories: string[]): Observable<any> {
+    return this.http.post(this.baseUrl + '/updateCategories', { brandId, title, categories });
   }
 
 }

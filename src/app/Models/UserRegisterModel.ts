@@ -1,6 +1,7 @@
-export class UserRegisterModel {
-        public userName: string;
-        public email: string;
-        public phonenumber: string;
-        public password: string;
+export interface UserRegisterModel {
+        userName: string;
+        email: string;
+        phoneNumber: string;
+        password: string;
+        townId: number;
 }

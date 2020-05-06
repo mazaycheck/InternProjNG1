@@ -18,9 +18,8 @@ constructor(private http: HttpClient) {
    return this.http.get(this.baseUrl + 'api/roles/roleslist');
  }
 
- updateRoles(email: string, newRoles: string[]): Observable<any> {
-  const userRolesForModify = {email, newRoles};
-  return this.http.post(this.baseUrl + 'api/roles/editroles', userRolesForModify);
+ update(email: string, title: string, newRoles: string[]): Observable<any> {
+   return this.http.post(this.baseUrl + 'api/roles/editroles', {email, newRoles});
  }
 
 }

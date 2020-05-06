@@ -27,6 +27,10 @@ export class NavComponent implements OnInit {
     }
   }
 
+  hasRequiredAccess(roles: string[]) {
+    return this.authService.hasRequiredRoles(roles);
+  }
+
   login() {
 
     this.authService.login(this.loginData).subscribe(

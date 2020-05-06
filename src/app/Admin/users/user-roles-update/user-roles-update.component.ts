@@ -28,14 +28,14 @@ export class UserRolesUpdateComponent implements OnInit {
     this.temporaryRoles = [...this.user.roles];
   }
   editSave(user) {
-    this.adminService.updateRoles(user.email, this.temporaryRoles).subscribe(response => {
-      this.toastr.success(`${user.userName} updated`);
-      user.roles = [...this.temporaryRoles];
-      this.dialog.closeAll();
-    },
-      error => {
-        this.toastr.error(error);
-      });
+    // this.adminService.updateRoles(user.email, this.temporaryRoles).subscribe(response => {
+    //   this.toastr.success(`${user.userName} updated`);
+    //   user.roles = [...this.temporaryRoles];
+    //   this.dialog.closeAll();
+    // },
+    //   error => {
+    //     this.toastr.error(error);
+    //   });
     }
 
   editCancel(entity) {

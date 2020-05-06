@@ -27,7 +27,7 @@ export class BrandListUpdateComponent implements OnInit {
     this.temporaryBrandTitle = this.brand.title;
   }
   editSave(brand) {
-    this.brandService.updateCategories(brand.brandId, this.temporaryBrandTitle, this.temporaryCategories)
+    this.brandService.update(brand.brandId, this.temporaryBrandTitle, this.temporaryCategories)
       .subscribe(response => {
         this.toastr.success(`${brand.title} was updated`);
         brand.categories = [...this.temporaryCategories].sort();

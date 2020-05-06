@@ -12,6 +12,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { FormControl } from '@angular/forms';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { BrandListUpdateComponent } from './brand-list-update/brand-list-update.component';
+import { CheckboxUpdateModalComponent } from '../checkbox-update-modal/checkbox-update-modal.component';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -23,7 +24,7 @@ export class BrandListComponent implements OnInit {
 
 
   allBrandsFromDb: Brand[] = [];
-  allCategoriesFromDb: Category[] = [];
+  allCategoriesFromDb: string[] = [];
   displayedColumns = ['title', 'categories', 'action'];
 
   filter = new FormControl('');
@@ -49,7 +50,7 @@ export class BrandListComponent implements OnInit {
 
   getAllCategories() {
     this.categoriesService.getAll().subscribe(response => {
-      this.allCategoriesFromDb = response;
+      this.allCategoriesFromDb = response.map(x => x.title);
     });
   }
 
@@ -98,7 +99,7 @@ export class BrandListComponent implements OnInit {
     // this.allBrandsEditOff();
     // this.temporaryCategories = [...brand.categories];
     // this.temporaryBrandTitle = brand.title;
-    this.onUpdateClicked({brand, categories: this.allCategoriesFromDb});
+    this.onUpdateClicked(brand);
   }
 
   pageClicked($event: PageEvent) {
@@ -131,13 +132,35 @@ export class BrandListComponent implements OnInit {
 
 
 
-  onUpdateClicked(data: any) {
+  // onUpdateClicked(data: any) {
+  //   const config = new MatDialogConfig();
+  //   config.minWidth = '380px';
+  //   config.width = '600px';
+  //   config.data = data;
+  //   console.log(config);
+  //   this.dialog.open(BrandListUpdateComponent, config);
+  // }
+
+
+  onUpdateClicked(brand: Brand) {
+    const dataToInject = {
+      identity: brand.brandId,
+      title: brand.title,
+      service: this.brandsService,
+      entity: brand,
+      allSelectOptions: this.allCategoriesFromDb,
+      currentSelection: brand.categories,
+      editTitle: true
+    };
     const config = new MatDialogConfig();
     config.minWidth = '380px';
     config.width = '600px';
-    config.data = data;
-    console.log(config);
-    this.dialog.open(BrandListUpdateComponent, config);
+    config.data = dataToInject;
+    this.dialog.open(CheckboxUpdateModalComponent, config);
+    this.dialog.afterAllClosed.subscribe(x => {
+      this.getAllBrands();
+    });
   }
+
 
 }

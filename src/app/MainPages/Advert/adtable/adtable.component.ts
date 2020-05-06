@@ -31,7 +31,6 @@ export class AdtableComponent implements OnInit, OnChanges {
   presentationMode: string;
   basePhotoUrl = 'http://localhost:5000/images/';
   pageObject: PageObject;
-  // displayedColumns: string[] = ['title', 'description', 'price', 'category', 'town', 'date', 'manage'];
   pageEvent: PageEvent;
   length = 1000;
   pageSize = 10;

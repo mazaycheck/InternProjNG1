@@ -132,3 +132,14 @@ input.input-message{
     left: 32px;
     animation-delay: 0.6s;
 }
+
+.message-time{
+    color: silver;
+    font-size: small;
+    display: none;
+    line-height: 36px;
+}
+
+.message-time :hover{
+    display: inline-block;
+}

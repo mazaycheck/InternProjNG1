@@ -12,7 +12,7 @@
   <mat-grid-tile>
     <mat-form-field appearance="fill">
       <mat-label>Your Name</mat-label>
-      <input matInput type="text"  name="name" [(ngModel)]="model.name" >  
+      <input matInput type="text"  name="name" [(ngModel)]="model.userName" >  
     </mat-form-field>
   </mat-grid-tile>
 
@@ -27,16 +27,31 @@
 <mat-grid-tile>
   <mat-form-field appearance="fill">
     <mat-label>Phone Number</mat-label>
-    <input matInput type="text"   name ="phonenumber" [(ngModel)]="model.phonenumber">
+    <input matInput type="text"   name ="phonenumber" [(ngModel)]="model.phoneNumber">
   </mat-form-field>
 </mat-grid-tile>
 
 <mat-grid-tile>
-  <mat-form-field appearance="fill">
+  <!-- <mat-form-field appearance="fill">
     <mat-label>HomeTown</mat-label>
     <input matInput type="number"  name ="townid" [(ngModel)]="model.townid" >
+  </mat-form-field> -->
+  <mat-form-field appearance="fill" class="">
+    <mat-label>Town</mat-label>
+    <mat-select required (selectionChange)="selectedTownChanged($event)" name="townId" [(ngModel)]="model.townId">  
+      <ng-container *ngIf="towns.length">
+        <mat-option *ngFor="let town of towns" [value]="town.townId">
+          {{ town.title }}
+        </mat-option>
+      </ng-container>
+    </mat-select>
   </mat-form-field>
+
 </mat-grid-tile>
+
+
+
+
 
 <mat-grid-tile>
   <mat-form-field appearance="fill">
@@ -47,7 +62,7 @@
 
 <mat-grid-tile>
   <button mat-raised-button color="accent" type="submit" class="mr-3">Register</button>
-  <mat-slide-toggle [(ngModel)]="model.checkout" name="checkout">Checkout</mat-slide-toggle>
+  <mat-slide-toggle [(ngModel)]="checkout" name="checkout">Checkout</mat-slide-toggle>
 
 </mat-grid-tile> 
 </mat-grid-list>

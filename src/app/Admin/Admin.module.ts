@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersComponent } from './users/users.component';
 import { BrandListUpdateComponent } from './brandList/brand-list-update/brand-list-update.component';
 import { UserRolesUpdateComponent } from './users/user-roles-update/user-roles-update.component';
+import { CheckboxUpdateModalComponent } from './checkbox-update-modal/checkbox-update-modal.component';
 
 export const routes: Routes = [
   { path: '', component: AdminComponent },
@@ -29,7 +30,8 @@ export const routes: Routes = [
     BrandListComponent,
     UsersComponent,
     BrandListUpdateComponent,
-    UserRolesUpdateComponent
+    UserRolesUpdateComponent,
+    CheckboxUpdateModalComponent
   ]
 })
 export class AdminModule { }

@@ -6,14 +6,25 @@
 </mat-toolbar>
 <br>
 
-<ng-container *ngIf="messages.length">
+<ng-container>
 <!-- <cdk-virtual-scroll-viewport itemSize="3" class="example-viewport" ngx-auto-scroll lock-y-offset="10" observe-attributes> -->
 <cdk-virtual-scroll-viewport itemSize="3" class="example-viewport">
   <div *cdkVirtualFor="let message of messages" class="example-item w-100" >
     <div [class]="message.senderName == data.name ? 'messageFromContainer' : 'messageToContainer'">
+
+      <div *ngIf="message.senderName == data.name" class="message-time d-block mx-2">
+        {{message.dateTimeSent | date}}
+      </div>
+
       <div [class]="message.senderName == data.name ? 'messageFromBox' : 'messageToBox'">
         {{message.text}}
       </div>
+
+      <div *ngIf="!(message.senderName == data.name)" class="message-time d-block mx-2">
+        {{message.dateTimeSent | date}}
+      </div>
+
+
     </div>
   </div>
   <div *ngIf="otherUserIsTyping" class="messageFromContainer">

@@ -25,7 +25,7 @@ export const routes: Routes = [
   {
     path: '', runGuardsAndResolvers: 'always', canActivate: [AuthGuard], children: [
       { path: 'ads', component: AdlistComponent },
-      { path: 'ads/new', component: AdcreateComponent },
+      { path: 'newadvert', component: AdcreateComponent },
       { path: 'ads/details/:id', component: AddetailComponent, resolve: { advert: AdvertResolver } },
       { path: 'ads/update/:id', component: AdupdateComponent },
       { path: 'messages', component: MessagesComponent, },
